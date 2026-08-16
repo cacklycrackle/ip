@@ -21,14 +21,26 @@ public class Jasper {
         System.out.print(hello);
 
         // Chat loop
+        String[] tasks = new String[100];
+        int taskIndex = 0;
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.print(lineSeparator);
             String line = sc.nextLine();
             if (line.equals("bye")) {
                 break;
+            } else if (line.equals("list")) {
+                for (int i = 0; i < taskIndex; ++i) {
+                    String entry = String.format("%d. %s\n", i + 1, tasks[i]);
+                    System.out.print(entry.indent(4));
+                }
+            } else if (taskIndex >= tasks.length) {
+                System.out.println("ERROR: No more space in list! Time to exit.");
+            } else {
+                tasks[taskIndex++] = line;
+                line = "added " + line;
+                System.out.print(line.indent(4));
             }
-            System.out.print(line.indent(4));
         }
         sc.close();
 

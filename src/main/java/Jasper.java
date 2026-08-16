@@ -31,7 +31,7 @@ public class Jasper {
                 break;
             } else if (line.equals("list")) {
                 for (int i = 0; i < taskIndex; ++i) {
-                    System.out.print(tasks[i].toString().indent(4));
+                    System.out.print(String.format("%d.%s", i + 1, tasks[i]).indent(4));
                 }
             } else if (line.startsWith("unmark") || line.startsWith("mark")) {
                 String[] parts = line.split(" ");

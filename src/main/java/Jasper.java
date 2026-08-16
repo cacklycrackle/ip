@@ -46,6 +46,16 @@ public class Jasper {
                         isTaskDone[taskNum] ? ' ' : 'X', tasks[taskNum]);
                 isTaskDone[taskNum] = true;
                 System.out.print(output.indent(4));
+            } else if (line.startsWith("unmark")){
+                String[] parts = line.split(" ");
+                int taskNum = Integer.parseInt(parts[1]) - 1;
+                String output = String.format("""
+                        Alright! I've marked this task as not done yet:
+                          [%c] %s
+                        """,
+                        isTaskDone[taskNum] ? ' ' : 'X', tasks[taskNum]);
+                isTaskDone[taskNum] = false;
+                System.out.print(output.indent(4));
             } else if (taskIndex >= tasks.length) {
                 System.out.print("ERROR: No more space in list! Time to exit.".indent(4));
             } else {

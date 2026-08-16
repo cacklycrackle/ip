@@ -21,8 +21,7 @@ public class Jasper {
         System.out.print(hello);
 
         // Chat loop
-        String[] tasks = new String[100];
-        boolean[] isTaskDone = new boolean[tasks.length];
+        Task[] tasks = new Task[100];
         int taskIndex = 0;
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -32,36 +31,25 @@ public class Jasper {
                 break;
             } else if (line.equals("list")) {
                 for (int i = 0; i < taskIndex; ++i) {
-                    String entry = String.format("%d.[%c] %s\n",
-                            i + 1, isTaskDone[i] ? ' ' : 'X', tasks[i]);
-                    System.out.print(entry.indent(4));
+                    System.out.print(tasks[i].toString().indent(4));
                 }
-            } else if (line.startsWith("mark")) {
+            } else if (line.startsWith("unmark") || line.startsWith("mark")) {
                 String[] parts = line.split(" ");
                 int taskNum = Integer.parseInt(parts[1]) - 1;
-                String output = String.format("""
-                        Alright! I've marked this task as done:
-                          [%c] %s
-                        """,
-                        isTaskDone[taskNum] ? ' ' : 'X', tasks[taskNum]);
-                isTaskDone[taskNum] = true;
-                System.out.print(output.indent(4));
-            } else if (line.startsWith("unmark")){
-                String[] parts = line.split(" ");
-                int taskNum = Integer.parseInt(parts[1]) - 1;
-                String output = String.format("""
-                        Alright! I've marked this task as not done yet:
-                          [%c] %s
-                        """,
-                        isTaskDone[taskNum] ? ' ' : 'X', tasks[taskNum]);
-                isTaskDone[taskNum] = false;
-                System.out.print(output.indent(4));
+                String output;
+                if (parts[0].equals("mark")) {
+                    output = "Alright! I've marked this task as done";
+                    tasks[taskNum].markAsDone();
+                } else { // parts[0].equals("unmark")
+                    output = "Get to work... I've marked this tasks as not done yet";
+                    tasks[taskNum].markAsUndone();
+                }
+                System.out.print(String.format("%s:\n  %s", output, tasks[taskNum]).indent(4));
             } else if (taskIndex >= tasks.length) {
                 System.out.print("ERROR: No more space in list! Time to exit.".indent(4));
             } else {
-                tasks[taskIndex++] = line;
-                line = "added " + line;
-                System.out.print(line.indent(4));
+                tasks[taskIndex++] = new Task(line);
+                System.out.print(String.format("added %s", line).indent(4));
             }
         }
         sc.close();

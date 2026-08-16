@@ -22,20 +22,32 @@ public class Jasper {
 
         // Chat loop
         String[] tasks = new String[100];
+        boolean[] isTaskDone = new boolean[tasks.length];
         int taskIndex = 0;
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.print(lineSeparator);
-            String line = sc.nextLine();
+            String line = sc.nextLine().strip();
             if (line.equals("bye")) {
                 break;
             } else if (line.equals("list")) {
                 for (int i = 0; i < taskIndex; ++i) {
-                    String entry = String.format("%d. %s\n", i + 1, tasks[i]);
+                    String entry = String.format("%d.[%c] %s\n",
+                            i + 1, isTaskDone[i] ? ' ' : 'X', tasks[i]);
                     System.out.print(entry.indent(4));
                 }
+            } else if (line.startsWith("mark")) {
+                String[] parts = line.split(" ");
+                int taskNum = Integer.parseInt(parts[1]) - 1;
+                String output = String.format("""
+                        Alright! I've marked this task as done:
+                          [%c] %s
+                        """,
+                        isTaskDone[taskNum] ? ' ' : 'X', tasks[taskNum]);
+                isTaskDone[taskNum] = true;
+                System.out.print(output.indent(4));
             } else if (taskIndex >= tasks.length) {
-                System.out.println("ERROR: No more space in list! Time to exit.");
+                System.out.print("ERROR: No more space in list! Time to exit.".indent(4));
             } else {
                 tasks[taskIndex++] = line;
                 line = "added " + line;

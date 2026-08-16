@@ -45,8 +45,6 @@ public class Jasper {
                     tasks[taskNum].markAsUndone();
                 }
                 System.out.print(String.format("%s:\n  %s", output, tasks[taskNum]).indent(4));
-            } else if (taskIndex >= tasks.length) {
-                System.out.print("ERROR: No more space in list! Time to exit.".indent(4));
             } else {
                 tasks[taskIndex++] = new Task(line);
                 System.out.print(String.format("added %s", line).indent(4));

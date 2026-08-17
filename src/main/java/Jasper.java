@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Jasper {
@@ -22,8 +24,7 @@ public class Jasper {
         System.out.print(lineSeparator);
 
         // chat loop
-        Task[] tasks = new Task[100];
-        int taskIndex = 0;
+        List<Task> tasks = new ArrayList<>(100);
         Scanner sc = new Scanner(System.in);
         boolean quit = false;
         while (!quit) {
@@ -35,40 +36,40 @@ public class Jasper {
                     yield "Farewell. Hope to see you again soon!";
                 }
                 case "list" -> {
-                    if (taskIndex == 0) {
+                    if (tasks.isEmpty()) {
                         yield "No tasks here! Add some to track.";
                     }
                     StringBuilder sb = new StringBuilder("Here are your tasks:\n");
-                    for (int i = 0; i < taskIndex; ++i) {
-                        sb.append(String.format("%d.%s", i + 1, tasks[i])).append('\n');
+                    for (int i = 0; i < tasks.size(); ++i) {
+                        sb.append(String.format("%d.%s", i + 1, tasks.get(i))).append('\n');
                     }
                     yield sb.toString();
                 }
                 case "unmark" -> {
                     int n = Integer.parseInt(tokens[1]) - 1; // task number in list
-                    tasks[n].markAsUndone();
-                    yield "Get to work... I've marked this task as not done yet\n  " + tasks[n];
+                    tasks.get(n).markAsUndone();
+                    yield "Get to work... I've marked this task as not done yet\n  " + tasks.get(n);
                 }
                 case "mark" -> {
                     int n = Integer.parseInt(tokens[1]) - 1; // task number in list
-                    tasks[n].markAsDone();
-                    yield "Alright! I've marked this task as done\n  " + tasks[n];
+                    tasks.get(n).markAsDone();
+                    yield "Alright! I've marked this task as done\n  " + tasks.get(n);
                 }
                 case "todo" -> {
                     Task t = new Todo(tokens[1]);
-                    tasks[taskIndex++] = t;
+                    tasks.add(t);
                     yield "Aye, aye. I've added this task:\n  " + t;
                 }
                 case "deadline" -> {
                     String[] parts = tokens[1].split("\\s+/by\\s+", 2);
                     Task t = new Deadline(parts[0].strip(), parts[1].strip());
-                    tasks[taskIndex++] = t;
+                    tasks.add(t);
                     yield "Aye, aye. I've added this task:\n  " + t;
                 }
                 case "event" -> {
                     String[] parts = tokens[1].split("\\s+/(from|to)\\s+");
                     Task t = new Event(parts[0].strip(), parts[1].strip(), parts[2].strip());
-                    tasks[taskIndex++] = t;
+                    tasks.add(t);
                     yield "Aye, aye. I've added this task:\n  " + t;
                 }
                 default -> "ERROR: unknown command";

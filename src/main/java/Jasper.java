@@ -52,6 +52,7 @@ public class Jasper {
             case "list" -> new ListCommand(arg);
             case "unmark" -> new UnmarkCommand(arg);
             case "mark" -> new MarkCommand(arg);
+            case "delete" -> new DeleteCommand(arg);
             case "todo" -> new TodoCommand(arg);
             case "deadline" -> new DeadlineCommand(arg);
             case "event" -> new EventCommand(arg);

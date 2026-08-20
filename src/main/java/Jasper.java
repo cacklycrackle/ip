@@ -26,58 +26,36 @@ public class Jasper {
         // chat loop
         List<Task> tasks = new ArrayList<>(100);
         Scanner sc = new Scanner(System.in);
-        boolean quit = false;
-        while (!quit) {
+        boolean toQuit = false;
+        while (!toQuit) {
             // parse command
-            String[] tokens = sc.nextLine().strip().split("\\s+", 2);
-            String response = switch (tokens[0]) {
-                case "bye" -> {
-                    quit = true;
-                    yield "Farewell. Hope to see you again soon!";
-                }
-                case "list" -> {
-                    if (tasks.isEmpty()) {
-                        yield "No tasks here! Add some to track.";
-                    }
-                    StringBuilder sb = new StringBuilder("Here are your tasks:\n");
-                    for (int i = 0; i < tasks.size(); ++i) {
-                        sb.append(String.format("%d.%s", i + 1, tasks.get(i))).append('\n');
-                    }
-                    yield sb.toString();
-                }
-                case "unmark" -> {
-                    int n = Integer.parseInt(tokens[1]) - 1; // task number in list
-                    tasks.get(n).markAsUndone();
-                    yield "Get to work... I've marked this task as not done yet\n  " + tasks.get(n);
-                }
-                case "mark" -> {
-                    int n = Integer.parseInt(tokens[1]) - 1; // task number in list
-                    tasks.get(n).markAsDone();
-                    yield "Alright! I've marked this task as done\n  " + tasks.get(n);
-                }
-                case "todo" -> {
-                    Task t = new Todo(tokens[1]);
-                    tasks.add(t);
-                    yield "Aye, aye. I've added this task:\n  " + t;
-                }
-                case "deadline" -> {
-                    String[] parts = tokens[1].split("\\s+/by\\s+", 2);
-                    Task t = new Deadline(parts[0].strip(), parts[1].strip());
-                    tasks.add(t);
-                    yield "Aye, aye. I've added this task:\n  " + t;
-                }
-                case "event" -> {
-                    String[] parts = tokens[1].split("\\s+/(from|to)\\s+");
-                    Task t = new Event(parts[0].strip(), parts[1].strip(), parts[2].strip());
-                    tasks.add(t);
-                    yield "Aye, aye. I've added this task:\n  " + t;
-                }
-                default -> "ERROR: unknown command";
-            };
+            String response;
+            try {
+                Command cmd = parse(sc.nextLine());
+                response = cmd.execute(tasks);
+                toQuit = cmd.isQuit();
+            } catch (JasperException e) {
+                response = "Something is amiss... " + e.getMessage();
+            }
             // display chat response
             System.out.print(response.indent(4));
             System.out.print(lineSeparator);
         }
         sc.close();
+    }
+
+    private static Command parse(String line) throws JasperException {
+        String[] tokens = line.strip().split("\\s+", 2);
+        String arg = (tokens.length > 1) ? tokens[1] : "";
+        return switch (tokens[0]) {
+            case "bye" -> new ByeCommand(arg);
+            case "list" -> new ListCommand(arg);
+            case "unmark" -> new UnmarkCommand(arg);
+            case "mark" -> new MarkCommand(arg);
+            case "todo" -> new TodoCommand(arg);
+            case "deadline" -> new DeadlineCommand(arg);
+            case "event" -> new EventCommand(arg);
+            default -> throw new JasperException("Unknown command: " + tokens[0]);
+        };
     }
 }

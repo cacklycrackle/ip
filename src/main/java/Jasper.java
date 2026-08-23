@@ -12,8 +12,9 @@ public class Jasper {
                                    |_|               \s
                 """.indent(4);
         String hello = """
-                Hello! I'm Jasper.
-                What can I do for you? End session with 'bye'.
+                Hello! I'm Jasper. Whatever shalt thou require of me today?
+                Supported commands:
+                    bye, list, unmark, mark, delete, todo, deadline, event
                 """.indent(4);
         String lineSeparator = "-".repeat(60).indent(4);
 
@@ -35,7 +36,7 @@ public class Jasper {
                 response = cmd.execute(tasks);
                 toQuit = cmd.isQuit();
             } catch (JasperException e) {
-                response = "Something is amiss... " + e.getMessage();
+                response = e.getMessage();
             }
             // display chat response
             System.out.print(response.indent(4));

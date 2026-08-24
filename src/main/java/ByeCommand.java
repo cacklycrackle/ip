@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class ByeCommand implements Command {
     ByeCommand(String arg) throws JasperException {
         if (!arg.isEmpty()) {
@@ -8,7 +6,7 @@ public class ByeCommand implements Command {
     }
 
     @Override
-    public String execute(List<Task> tasks) {
+    public String execute(TaskList tasks) {
         return "Farewell. Hope to see you again soon!";
     }
 

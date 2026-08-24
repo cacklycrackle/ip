@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 
 public class EventCommand implements Command {
     private final Task t;
@@ -21,7 +20,7 @@ public class EventCommand implements Command {
     }
 
     @Override
-    public String execute(List<Task> tasks) {
+    public String execute(TaskList tasks) {
         tasks.add(t);
         return "Aye, aye. I've added this task:\n  " + t;
     }

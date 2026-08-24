@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Jasper {
@@ -26,12 +24,12 @@ public class Jasper {
 
         // load tasks from disk
         Storage storage = new Storage("data", "jasper.txt");
-        List<Task> tasks;
+        TaskList tasks;
         try {
-            tasks = storage.load();
+            tasks = new TaskList(storage.load());
         } catch (JasperException e) {
             System.out.println(e.getMessage().indent(4)) ;
-            tasks = new ArrayList<>(100);
+            tasks = new TaskList();
         }
 
         // chat loop

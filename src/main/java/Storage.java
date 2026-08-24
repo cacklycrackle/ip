@@ -68,17 +68,16 @@ public class Storage {
         }
     }
 
-    public void save(List<Task> tasks) throws JasperException {
+    public void save(TaskList tasks) throws JasperException {
         try {
             Files.createDirectories(path.getParent());
             List<String> lines = new ArrayList<>();
             for (Task task : tasks) {
                 int status = task.isDone ? 1 : 0;
                 String entry = switch (task) {
-                    case Todo t -> String.format("T | %d | %s", status, t.description);
-                    case Deadline d -> String.format("D | %d | %s | %s", status, d.description, d.getBy());
-                    case Event e -> String.format("E | %d | %s | %s | %s", status,
-                            e.description, e.getFrom(), e.getTo());
+                    case Todo t -> "T | " + status + " | " + t.description;
+                    case Deadline d -> "D | " + status + " | " + d.description + " | " + d.getBy();
+                    case Event e -> "E | " + status + " | " + e.description + " | " + e.getFrom() + " | " + e.getTo();
                     default -> throw new IllegalStateException("Missing implementation.");
                 };
                 lines.add(entry);

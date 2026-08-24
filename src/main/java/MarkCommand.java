@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class MarkCommand implements Command {
     private final int n;
 
@@ -12,12 +10,9 @@ public class MarkCommand implements Command {
     }
 
     @Override
-    public String execute(List<Task> tasks) throws JasperException {
-        if (n < 0 || n >= tasks.size()) {
-            throw new JasperException("Task index out of range");
-        }
-        tasks.get(n).markAsDone();
-        return "Alright! I've marked this task as done\n  " + tasks.get(n);
+    public String execute(TaskList tasks) throws JasperException {
+        Task t = tasks.mark(n);
+        return "Alright! I've marked this task as done\n  " + t;
 
     }
 }

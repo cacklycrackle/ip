@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class TodoCommand implements Command {
     private final Task t;
 
@@ -11,7 +9,7 @@ public class TodoCommand implements Command {
     }
 
     @Override
-    public String execute(List<Task> tasks) {
+    public String execute(TaskList tasks) {
         tasks.add(t);
         return "Aye, aye. I've added this task:\n  " + t;
     }

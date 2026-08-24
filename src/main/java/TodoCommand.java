@@ -1,18 +1,17 @@
 import java.util.List;
 
 public class TodoCommand implements Command {
-    private final String arg;
+    private final Task t;
 
     TodoCommand(String arg) throws JasperException {
         if (arg.isEmpty()) {
             throw new JasperException("Usage: todo <task>");
         }
-        this.arg = arg;
+        t = new Todo(arg);
     }
 
     @Override
     public String execute(List<Task> tasks) {
-        Task t = new Todo(arg);
         tasks.add(t);
         return "Aye, aye. I've added this task:\n  " + t;
     }

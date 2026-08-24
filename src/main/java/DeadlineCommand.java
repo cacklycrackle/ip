@@ -1,19 +1,27 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class DeadlineCommand implements Command {
-    private final String[] parts;
+    private final Task t;
 
     DeadlineCommand(String arg) throws JasperException {
         String[] parts = arg.split("\\s+/by\\s+", 2);
         if (parts.length != 2) {
             throw new JasperException("Usage: deadline <task> /by <datetime>");
         }
-        this.parts = parts;
+        String pattern = "yyyy-MM-dd HH:mm";
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+        try {
+            t = new Deadline(parts[0], LocalDateTime.parse(parts[1].trim(), fmt));
+        } catch (DateTimeParseException e) {
+            throw new JasperException("Follow these datetime format(s): " + pattern);
+        }
     }
 
     @Override
     public String execute(List<Task> tasks) {
-        Task t = new Deadline(parts[0], parts[1]);
         tasks.add(t);
         return "Aye, aye. I've added this task:\n  " + t;
     }

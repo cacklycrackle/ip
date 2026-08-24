@@ -1,7 +1,3 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 public class DeadlineCommand implements Command {
     private final Task t;
 
@@ -10,13 +6,7 @@ public class DeadlineCommand implements Command {
         if (parts.length != 2) {
             throw new JasperException("Usage: deadline <task> /by <datetime>");
         }
-        String pattern = "yyyy-MM-dd HH:mm";
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
-        try {
-            t = new Deadline(parts[0], LocalDateTime.parse(parts[1].trim(), fmt));
-        } catch (DateTimeParseException e) {
-            throw new JasperException("Follow these datetime format(s): " + pattern);
-        }
+        t = new Deadline(parts[0], Parser.parseDateTime(parts[1]));
     }
 
     @Override

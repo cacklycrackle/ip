@@ -1,7 +1,3 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 public class EventCommand implements Command {
     private final Task t;
 
@@ -10,13 +6,7 @@ public class EventCommand implements Command {
         if (parts.length != 3) {
             throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
         }
-        String pattern = "yyyy-MM-dd HH:mm";
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
-        try {
-            t = new Event(parts[0], LocalDateTime.parse(parts[1], fmt), LocalDateTime.parse(parts[2], fmt));
-        } catch (DateTimeParseException e) {
-            throw new JasperException("Follow these datetime format(s): " + pattern);
-        }
+        t = new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2]));
     }
 
     @Override

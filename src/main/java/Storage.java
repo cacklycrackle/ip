@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -44,12 +46,12 @@ public class Storage {
                     case 'D':
                         parts = line.split(" \\| ", 4);
                         if (parts.length < 4) throw new JasperException("Error reading or loading savefile!");
-                        t = new Deadline(parts[2], parts[3]);
+                        t = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
                         break;
                     case 'E':
                         parts = line.split(" \\| ", 5);
                         if (parts.length < 5) throw new JasperException("Error reading or loading savefile!");
-                        t = new Event(parts[2], parts[3], parts[4]);
+                        t = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
                         break;
                     default:
                         throw new IllegalStateException();
@@ -61,7 +63,7 @@ public class Storage {
             }
             reader.close();
             return tasks;
-        } catch (IOException e) {
+        } catch (IOException | DateTimeParseException e) {
             throw new JasperException("Error reading or loading savefile!");
         }
     }
@@ -70,14 +72,14 @@ public class Storage {
         try {
             Files.createDirectories(path.getParent());
             List<String> lines = new ArrayList<>();
-
             for (Task task : tasks) {
                 int status = task.isDone ? 1 : 0;
                 String entry = switch (task) {
                     case Todo t -> String.format("T | %d | %s", status, t.description);
-                    case Deadline d -> String.format("D | %d | %s | %s", status, d.description, d.by);
-                    case Event e -> String.format("E | %d | %s | %s | %s", status, e.description, e.from, e.to);
-                    default -> throw new IllegalStateException("Missing implementation!");
+                    case Deadline d -> String.format("D | %d | %s | %s", status, d.description, d.getBy());
+                    case Event e -> String.format("E | %d | %s | %s | %s", status,
+                            e.description, e.getFrom(), e.getTo());
+                    default -> throw new IllegalStateException("Missing implementation.");
                 };
                 lines.add(entry);
             }

@@ -1,5 +1,10 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.task.TaskList;
+
 public class ByeCommand implements Command {
-    ByeCommand(String arg) throws JasperException {
+    public ByeCommand(String arg) throws JasperException {
         if (!arg.isEmpty()) {
             throw new JasperException("Usage: bye");
         }

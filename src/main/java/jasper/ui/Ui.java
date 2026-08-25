@@ -1,3 +1,5 @@
+package jasper.ui;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -25,16 +27,16 @@ public class Ui {
     }
 
     public void showLine() {
-        System.out.println(SEPARATOR);
+        System.out.print(SEPARATOR);
     }
 
     public void showResponse(String message) {
-        System.out.println(message.indent(4));
+        System.out.print(message.indent(4));
     }
 
     public void showWelcome() {
         showLine();
-        System.out.println("""
+        System.out.print("""
                     _                                \s
                  _ | |  __ _   ___  _ __   ___   _ _ \s
                 | || | / _` | (_-< | '_ \\ / -_) | '_|\s
@@ -42,7 +44,7 @@ public class Ui {
                                    |_|               \s
                 """.indent(4)
         );
-        System.out.println("""
+        System.out.print("""
                 Hello! I'm Jasper. Whatever shalt thou require of me today?
                 Supported commands:
                     bye, list, unmark, mark, delete, todo, deadline, event

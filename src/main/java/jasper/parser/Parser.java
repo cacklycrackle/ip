@@ -1,3 +1,16 @@
+package jasper.parser;
+
+import jasper.JasperException;
+import jasper.command.ByeCommand;
+import jasper.command.Command;
+import jasper.command.DeadlineCommand;
+import jasper.command.DeleteCommand;
+import jasper.command.EventCommand;
+import jasper.command.ListCommand;
+import jasper.command.MarkCommand;
+import jasper.command.TodoCommand;
+import jasper.command.UnmarkCommand;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,7 +38,7 @@ public class Parser {
         try {
             return LocalDateTime.parse(dt, fmt);
         } catch (DateTimeParseException e) {
-            throw new JasperException("Follow these datetime format(s): " + pattern);
+            throw new JasperException("Accepted datetime format(s): " + pattern);
         }
     }
 }

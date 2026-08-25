@@ -1,7 +1,13 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.task.Task;
+import jasper.task.TaskList;
+
 public class MarkCommand implements Command {
     private final int n;
 
-    MarkCommand(String arg) throws JasperException {
+    public MarkCommand(String arg) throws JasperException {
         try {
             this.n = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {

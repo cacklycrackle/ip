@@ -1,7 +1,13 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.task.Task;
+import jasper.task.TaskList;
+
 public class UnmarkCommand implements Command {
     private final int n;
 
-    UnmarkCommand(String arg) throws JasperException {
+    public UnmarkCommand(String arg) throws JasperException {
         try {
             this.n = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {

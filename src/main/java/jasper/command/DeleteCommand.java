@@ -1,7 +1,13 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.task.Task;
+import jasper.task.TaskList;
+
 public class DeleteCommand implements Command {
     private final int n;
 
-    DeleteCommand(String arg) throws JasperException {
+    public DeleteCommand(String arg) throws JasperException {
         try {
             this.n = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {

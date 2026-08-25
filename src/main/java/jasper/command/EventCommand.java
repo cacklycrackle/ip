@@ -1,7 +1,15 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.parser.Parser;
+import jasper.task.Event;
+import jasper.task.Task;
+import jasper.task.TaskList;
+
 public class EventCommand implements Command {
     private final Task t;
 
-    EventCommand(String arg) throws JasperException {
+    public EventCommand(String arg) throws JasperException {
         String[] parts = arg.split("\\s+/(from|to)\\s+", 3);
         if (parts.length != 3) {
             throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");

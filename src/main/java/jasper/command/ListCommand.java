@@ -1,5 +1,10 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.task.TaskList;
+
 public class ListCommand implements Command {
-    ListCommand(String arg) throws JasperException {
+    public ListCommand(String arg) throws JasperException {
         if (!arg.isEmpty()) {
             throw new JasperException("Usage: list");
         }

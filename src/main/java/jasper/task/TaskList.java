@@ -1,3 +1,7 @@
+package jasper.task;
+
+import jasper.JasperException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,14 +43,14 @@ public class TaskList implements Iterable<Task> {
     public Task mark(int n) throws JasperException {
         check(n, tasks);
         Task t = tasks.get(n);
-        t.markAsDone();
+        t.markDone();
         return t;
     }
 
     public Task unmark(int n) throws JasperException {
         check(n, tasks);
         Task t = tasks.get(n);
-        t.markAsUndone();
+        t.markUndone();
         return t;
     }
 

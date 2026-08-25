@@ -1,22 +1,29 @@
+package jasper;
+
+import jasper.command.Command;
+import jasper.parser.Parser;
+import jasper.storage.Storage;
+import jasper.task.TaskList;
+import jasper.ui.Ui;
+
 public class Jasper {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
 
-    public Jasper(String parent, String filename) {
+    private Jasper(String parent, String filename) {
         storage = new Storage(parent, filename);
         TaskList tmp;
         try {
             tmp = new TaskList(storage.load());
         } catch (JasperException e) {
-            // System.out.println(e.getMessage().indent(4)) ;
             tmp = new TaskList();
         }
         tasks = tmp;
         ui = new Ui();
     }
 
-    public void run() {
+    private void run() {
         ui.showWelcome();
         boolean toQuit = false;
         while (!toQuit) {

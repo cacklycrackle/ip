@@ -1,7 +1,15 @@
+package jasper.command;
+
+import jasper.JasperException;
+import jasper.parser.Parser;
+import jasper.task.Deadline;
+import jasper.task.Task;
+import jasper.task.TaskList;
+
 public class DeadlineCommand implements Command {
     private final Task t;
 
-    DeadlineCommand(String arg) throws JasperException {
+    public DeadlineCommand(String arg) throws JasperException {
         String[] parts = arg.split("\\s+/by\\s+", 2);
         if (parts.length != 2) {
             throw new JasperException("Usage: deadline <task> /by <datetime>");

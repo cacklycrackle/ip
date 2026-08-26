@@ -14,6 +14,7 @@ import jasper.command.UnmarkCommand;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 public class Parser {
     public static Command parseCmd(String line) throws JasperException {
@@ -33,8 +34,9 @@ public class Parser {
     }
 
     public static LocalDateTime parseDateTime(String dt) throws JasperException {
-        String pattern = "yyyy-MM-dd HH:mm";
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+        String pattern = "uuuu-MM-dd HH:mm";
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern)
+                .withResolverStyle(ResolverStyle.STRICT);
         try {
             return LocalDateTime.parse(dt, fmt);
         } catch (DateTimeParseException e) {

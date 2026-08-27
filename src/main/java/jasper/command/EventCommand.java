@@ -10,11 +10,18 @@ public class EventCommand implements Command {
     private final Task t;
 
     public EventCommand(String arg) throws JasperException {
-        String[] parts = arg.split("\\s+/(from|to)\\s+", 3);
-        if (parts.length != 3) {
+        int sepFrom = arg.lastIndexOf("/from");
+        int sepTo = arg.lastIndexOf("/to");
+        if (sepFrom == -1 || sepTo == -1 || sepTo < sepFrom) {
             throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
         }
-        t = new Event(parts[0], Parser.parseDateTime(parts[1]), Parser.parseDateTime(parts[2]));
+        String task = arg.substring(0, sepFrom).strip();
+        String dtFrom = arg.substring(sepFrom + 5, sepTo).strip();
+        String dtTo = arg.substring(sepTo + 3).strip();
+        if (task.isEmpty() || dtFrom.isEmpty() || dtTo.isEmpty()) {
+            throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
+        }
+        t = new Event(task, Parser.parseDateTime(dtFrom), Parser.parseDateTime(dtTo));
     }
 
     @Override

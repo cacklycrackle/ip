@@ -10,11 +10,16 @@ public class DeadlineCommand implements Command {
     private final Task t;
 
     public DeadlineCommand(String arg) throws JasperException {
-        String[] parts = arg.split("\\s+/by\\s+", 2);
-        if (parts.length != 2) {
+        int sep = arg.lastIndexOf("/by");
+        if (sep == -1) {
             throw new JasperException("Usage: deadline <task> /by <datetime>");
         }
-        t = new Deadline(parts[0], Parser.parseDateTime(parts[1]));
+        String task = arg.substring(0, sep).strip();
+        String dt = arg.substring(sep + 3).strip();
+        if (task.isEmpty() || dt.isEmpty()) {
+            throw new JasperException("Usage: deadline <task> /by <datetime>");
+        }
+        t = new Deadline(task, Parser.parseDateTime(dt));
     }
 
     @Override

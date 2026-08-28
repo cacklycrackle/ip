@@ -50,7 +50,7 @@ public class TaskListTest {
         try {
             Task result = tasks.mark(0);
             assertSame(stub, result);
-            assertTrue(stub.getDone());
+            assertTrue(stub.isDone());
         } catch (JasperException e) {
             fail();
         }
@@ -82,7 +82,7 @@ public class TaskListTest {
         try {
             Task result = tasks.unmark(0);
             assertSame(stub, result);
-            assertFalse(stub.getDone());
+            assertFalse(stub.isDone());
         } catch (JasperException e) {
             fail();
         }

@@ -41,7 +41,7 @@ public class UnmarkCommandTest {
             UnmarkCommand cmd = new UnmarkCommand("1");
             String result = cmd.execute(tasks);
             assertEquals("Get to work... I've marked this task as not done yet\n  [ ] sample_task", result);
-            assertFalse(stub.getDone());
+            assertFalse(stub.isDone());
         } catch (JasperException e) {
             fail();
         }

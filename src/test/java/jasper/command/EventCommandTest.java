@@ -21,7 +21,8 @@ public class EventCommandTest {
 
     @Test
     public void constructor_missingTask_exceptionThrown() {
-        assertThrows(JasperException.class, () -> new EventCommand(" /from 2013-10-28 14:00 /to 2013-11-05 16:50"));
+        assertThrows(JasperException.class, () ->
+                new EventCommand(" /from 2013-10-28 14:00 /to 2013-11-05 16:50"));
     }
 
     @Test
@@ -43,7 +44,8 @@ public class EventCommandTest {
 
     @Test
     public void constructor_missingFromDateTime_exceptionThrown() {
-        assertThrows(JasperException.class, () -> new EventCommand("Project meeting /from /to 2026-08-26 16:30"));
+        assertThrows(JasperException.class, () ->
+                new EventCommand("Project meeting /from /to 2026-08-26 16:30"));
     }
 
     @Test
@@ -65,16 +67,17 @@ public class EventCommandTest {
 
     @Test
     public void constructor_missingToDateTime_exceptionThrown() {
-        assertThrows(JasperException.class, () -> new EventCommand("Project meeting /from 2026-08-26 14:00 /to "));
+        assertThrows(JasperException.class, () ->
+                new EventCommand("Project meeting /from 2026-08-26 14:00 /to "));
     }
 
     @Test
     public void constructor_invalidDateTimeFormat_exceptionThrown() {
-        assertThrows(JasperException.class,
-                () -> new EventCommand("Project meeting /from 2025-07-26 11:30 /to 2025-08-26 4pm"));
-        assertThrows(JasperException.class,
-                () -> new EventCommand("Project meeting /from 2025-07-26 4pm /to 2025-08-26 19:30"));
-        assertThrows(JasperException.class,
-                () -> new EventCommand("Project meeting /from 26-07-2025 11:30 /to 2025-08-26 4pm"));
+        assertThrows(JasperException.class, () ->
+                new EventCommand("Project meeting /from 2025-07-26 11:30 /to 2025-08-26 4pm"));
+        assertThrows(JasperException.class, () ->
+                new EventCommand("Project meeting /from 2025-07-26 4pm /to 2025-08-26 19:30"));
+        assertThrows(JasperException.class, () ->
+                new EventCommand("Project meeting /from 26-07-2025 11:30 /to 2025-08-26 4pm"));
     }
 }

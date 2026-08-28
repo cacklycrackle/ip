@@ -10,12 +10,12 @@ public class TodoSerializer {
     /**
      * Serializes a Todo task into a formatted string.
      *
-     * @param t Todo task to serialize.
+     * @param todo Todo task to serialize.
      * @return Formatted string representation of the task.
      */
-    public static String serialize(Todo t) {
-        int status = t.getDone() ? 1 : 0;
-        return "T | " + status + " | " + t.getDescription();
+    public static String serialize(Todo todo) {
+        int status = todo.isDone() ? 1 : 0;
+        return "T | " + status + " | " + todo.getDescription();
     }
 
     /**

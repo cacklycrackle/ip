@@ -9,7 +9,7 @@ import jasper.task.TaskList;
  */
 public class DeleteCommand implements Command {
     /** 0-based index of the task to be deleted */
-    private final int n;
+    private final int index;
 
     /**
      * Constructs a DeleteCommand by parsing the task index.
@@ -19,7 +19,7 @@ public class DeleteCommand implements Command {
      */
     public DeleteCommand(String arg) throws JasperException {
         try {
-            this.n = Integer.parseInt(arg) - 1;
+            index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
             throw new JasperException("Usage: delete N (integer task index)");
         }
@@ -27,7 +27,7 @@ public class DeleteCommand implements Command {
 
     @Override
     public String execute(TaskList tasks) throws JasperException {
-        Task t = tasks.delete(n);
+        Task t = tasks.delete(index);
         return "This task shall be terminated, if you insist:\n  " + t
                 + "\n1 task down, " + tasks.size() + " to go.";
 

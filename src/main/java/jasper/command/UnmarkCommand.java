@@ -9,7 +9,7 @@ import jasper.task.TaskList;
  */
 public class UnmarkCommand implements Command {
     /** 0-based index of the task to be marked */
-    private final int n;
+    private final int index;
 
     /**
      * Constructs an UnmarkCommand by parsing the task index.
@@ -19,7 +19,7 @@ public class UnmarkCommand implements Command {
      */
     public UnmarkCommand(String arg) throws JasperException {
         try {
-            this.n = Integer.parseInt(arg) - 1;
+            index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
             throw new JasperException("Usage: unmark N (integer task index)");
         }
@@ -27,7 +27,7 @@ public class UnmarkCommand implements Command {
 
     @Override
     public String execute(TaskList tasks) throws JasperException {
-        Task t = tasks.unmark(n);
+        Task t = tasks.unmark(index);
         return "Get to work... I've marked this task as not done yet\n  " + t;
 
     }

@@ -9,7 +9,7 @@ import jasper.task.TaskList;
  */
 public class MarkCommand implements Command {
     /** 0-based index of the task to be marked */
-    private final int n;
+    private final int index;
 
     /**
      * Constructs a MarkCommand by parsing the task index.
@@ -19,7 +19,7 @@ public class MarkCommand implements Command {
      */
     public MarkCommand(String arg) throws JasperException {
         try {
-            this.n = Integer.parseInt(arg) - 1;
+            index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
             throw new JasperException("Usage: mark N (integer task index)");
         }
@@ -27,7 +27,7 @@ public class MarkCommand implements Command {
 
     @Override
     public String execute(TaskList tasks) throws JasperException {
-        Task t = tasks.mark(n);
+        Task t = tasks.mark(index);
         return "Alright! I've marked this task as done\n  " + t;
 
     }

@@ -10,7 +10,7 @@ import jasper.task.Todo;
  */
 public class TodoCommand implements Command {
     /** Todo task to be added */
-    private final Task t;
+    private final Task task;
 
     /**
      * Constructs a TodoCommand by parsing the task description.
@@ -22,12 +22,12 @@ public class TodoCommand implements Command {
         if (arg.isEmpty()) {
             throw new JasperException("Usage: todo <task>");
         }
-        t = new Todo(arg);
+        task = new Todo(arg);
     }
 
     @Override
     public String execute(TaskList tasks) {
-        tasks.add(t);
-        return "Aye, aye. I've added this task:\n  " + t;
+        tasks.add(task);
+        return "Aye, aye. I've added this task:\n  " + task;
     }
 }

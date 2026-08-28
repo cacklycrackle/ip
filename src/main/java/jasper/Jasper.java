@@ -40,13 +40,13 @@ public class Jasper {
      */
     private void run() {
         ui.showWelcome();
-        boolean toQuit = false;
-        while (!toQuit) {
+        boolean shouldQuit = false;
+        while (!shouldQuit) {
             String response;
             try {
                 Command cmd = Parser.parseCmd(ui.readCommand());
                 response = cmd.execute(tasks);
-                toQuit = cmd.isQuit();
+                shouldQuit = cmd.isQuit();
                 ui.showResponse(response);
                 storage.save(tasks);
             } catch (JasperException e) {

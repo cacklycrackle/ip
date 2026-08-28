@@ -42,7 +42,7 @@ public class MarkCommandTest {
             MarkCommand cmd = new MarkCommand("1");
             String result = cmd.execute(tasks);
             assertEquals("Alright! I've marked this task as done\n  [X] sample_task", result);
-            assertTrue(stub.getDone());
+            assertTrue(stub.isDone());
         } catch (JasperException e) {
             fail();
         }

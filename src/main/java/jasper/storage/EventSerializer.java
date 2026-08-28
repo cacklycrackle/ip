@@ -1,10 +1,10 @@
 package jasper.storage;
 
-import jasper.JasperException;
-import jasper.task.Event;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+
+import jasper.JasperException;
+import jasper.task.Event;
 
 /**
  * Provides methods to serialize and deserialize Event tasks.
@@ -13,12 +13,12 @@ public class EventSerializer {
     /**
      * Serializes an Event task into a formatted string.
      *
-     * @param e Event task to serialize.
+     * @param event Event task to serialize.
      * @return Formatted string representation of the task.
      */
-    public static String serialize(Event e) {
-        int status = e.getDone() ? 1 : 0;
-        return "E | " + status + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+    public static String serialize(Event event) {
+        int status = event.isDone() ? 1 : 0;
+        return "E | " + status + " | " + event.getDescription() + " | " + event.getFrom() + " | " + event.getTo();
     }
 
     /**

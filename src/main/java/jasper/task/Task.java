@@ -1,9 +1,19 @@
 package jasper.task;
 
+/**
+ * Represents a generic task with a description and completion status.
+ */
 public class Task {
+    /** Description of the task */
     private final String description;
+    /** Completion status of the task */
     private boolean isDone;
 
+    /**
+     * Constructs a new Task with the specified description.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         markUndone();
@@ -21,10 +31,16 @@ public class Task {
         return isDone ? "X" : " ";
     }
 
+    /**
+     * Marks the task as completed.
+     */
     public void markDone() {
         isDone = true;
     }
 
+    /**
+     * Marks the task as not completed.
+     */
     public void markUndone() {
         isDone = false;
     }

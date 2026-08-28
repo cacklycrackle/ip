@@ -3,10 +3,22 @@ package jasper.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an event task that starts and ends at specific times.
+ */
 public class Event extends Task {
+    /** Start time of the event */
     private final LocalDateTime from;
+    /** End time of the event */
     private final LocalDateTime to;
 
+    /**
+     * Constructs an Event task with a description, start time, and end time.
+     *
+     * @param description Description of the event.
+     * @param from Start date and time.
+     * @param to End date and time.
+     */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;

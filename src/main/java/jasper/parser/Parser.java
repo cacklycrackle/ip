@@ -16,7 +16,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
+/**
+ * Handles parsing user input into application commands and date-time objects.
+ */
 public class Parser {
+    /**
+     * Parses the given user input string and returns the corresponding executable command.
+     *
+     * @param line Raw user input string to be parsed.
+     * @return Command object representing the user's intent.
+     * @throws JasperException If the command is unknown or the arguments are invalid.
+     */
     public static Command parseCmd(String line) throws JasperException {
         String[] tokens = line.strip().split("\\s+", 2);
         String arg = (tokens.length > 1) ? tokens[1] : "";
@@ -33,6 +43,13 @@ public class Parser {
         };
     }
 
+    /**
+     * Parses a date-time string into a LocalDateTime object using a strict format.
+     *
+     * @param dt Date-time string in the format "uuuu-MM-dd HH:mm".
+     * @return Parsed LocalDateTime object.
+     * @throws JasperException If the provided date-time string does not match the expected format.
+     */
     public static LocalDateTime parseDateTime(String dt) throws JasperException {
         String pattern = "uuuu-MM-dd HH:mm";
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern)

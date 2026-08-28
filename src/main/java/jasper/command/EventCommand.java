@@ -6,9 +6,19 @@ import jasper.task.Event;
 import jasper.task.Task;
 import jasper.task.TaskList;
 
+/**
+ * Represents a command to add an event task.
+ */
 public class EventCommand implements Command {
+    /** Event task to be added */
     private final Task t;
 
+    /**
+     * Constructs an EventCommand by parsing the task description and timeframe.
+     *
+     * @param arg The argument string containing the task details, start datetime, and end datetime.
+     * @throws JasperException If the argument format is invalid.
+     */
     public EventCommand(String arg) throws JasperException {
         int sepFrom = arg.lastIndexOf("/from");
         int sepTo = arg.lastIndexOf("/to");

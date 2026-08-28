@@ -1,10 +1,10 @@
 package jasper.task;
 
-import jasper.JasperException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import jasper.JasperException;
 
 public class TaskList implements Iterable<Task> {
     private final List<Task> tasks;

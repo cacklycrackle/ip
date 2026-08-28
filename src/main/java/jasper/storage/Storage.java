@@ -1,13 +1,5 @@
 package jasper.storage;
 
-import jasper.JasperException;
-import jasper.task.Deadline;
-import jasper.task.Event;
-import jasper.task.Task;
-import jasper.task.TaskList;
-import jasper.task.Todo;
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +8,13 @@ import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import jasper.JasperException;
+import jasper.task.Deadline;
+import jasper.task.Event;
+import jasper.task.Task;
+import jasper.task.TaskList;
+import jasper.task.Todo;
 
 public class Storage {
     private final Path path;
@@ -38,13 +37,13 @@ public class Storage {
                 if (line == null) {
                     break;
                 }
-                Task t = switch (line.charAt(0)) {
+                Task task = switch (line.charAt(0)) {
                     case 'T' -> TodoSerializer.deserialize(line);
                     case 'D' -> DeadlineSerializer.deserialize(line);
                     case 'E' -> EventSerializer.deserialize(line);
                     default -> throw new JasperException("Error reading or loading savefile!");
                 };
-                tasks.add(t);
+                tasks.add(task);
             }
             reader.close();
             return tasks;

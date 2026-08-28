@@ -1,15 +1,15 @@
 package jasper.storage;
 
-import jasper.JasperException;
-import jasper.task.Event;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+import jasper.JasperException;
+import jasper.task.Event;
+
 public class EventSerializer {
-    public static String serialize(Event e) {
-        int status = e.getDone() ? 1 : 0;
-        return "E | " + status + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
+    public static String serialize(Event event) {
+        int status = event.isDone() ? 1 : 0;
+        return "E | " + status + " | " + event.getDescription() + " | " + event.getFrom() + " | " + event.getTo();
     }
 
     public static Event deserialize(String line) throws JasperException {

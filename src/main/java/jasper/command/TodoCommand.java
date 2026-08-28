@@ -6,18 +6,18 @@ import jasper.task.TaskList;
 import jasper.task.Todo;
 
 public class TodoCommand implements Command {
-    private final Task t;
+    private final Task task;
 
     public TodoCommand(String arg) throws JasperException {
         if (arg.isEmpty()) {
             throw new JasperException("Usage: todo <task>");
         }
-        t = new Todo(arg);
+        task = new Todo(arg);
     }
 
     @Override
     public String execute(TaskList tasks) {
-        tasks.add(t);
-        return "Aye, aye. I've added this task:\n  " + t;
+        tasks.add(task);
+        return "Aye, aye. I've added this task:\n  " + task;
     }
 }

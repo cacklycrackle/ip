@@ -1,15 +1,15 @@
 package jasper.storage;
 
-import jasper.JasperException;
-import jasper.task.Deadline;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+import jasper.JasperException;
+import jasper.task.Deadline;
+
 public class DeadlineSerializer {
-    public static String serialize(Deadline d) {
-        int status = d.getDone() ? 1 : 0;
-        return "D | " + status + " | " + d.getDescription() + " | " + d.getBy();
+    public static String serialize(Deadline deadline) {
+        int status = deadline.isDone() ? 1 : 0;
+        return "D | " + status + " | " + deadline.getDescription() + " | " + deadline.getBy();
     }
 
     public static Deadline deserialize(String line) throws JasperException {

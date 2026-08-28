@@ -4,9 +4,9 @@ import jasper.JasperException;
 import jasper.task.Todo;
 
 public class TodoSerializer {
-    public static String serialize(Todo t) {
-        int status = t.getDone() ? 1 : 0;
-        return "T | " + status + " | " + t.getDescription();
+    public static String serialize(Todo todo) {
+        int status = todo.isDone() ? 1 : 0;
+        return "T | " + status + " | " + todo.getDescription();
     }
 
     public static Todo deserialize(String line) throws JasperException {

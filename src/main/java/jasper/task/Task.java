@@ -13,7 +13,7 @@ public class Task {
         return description;
     }
 
-    public boolean getDone() {
+    public boolean isDone() {
         return isDone;
     }
 

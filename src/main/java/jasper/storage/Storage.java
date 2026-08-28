@@ -17,13 +17,29 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles the loading and saving of tasks to a persistent storage file.
+ */
 public class Storage {
+    /** File path used for storage */
     private final Path path;
 
+    /**
+     * Constructs a Storage instance with the specified directory and filename.
+     *
+     * @param parent Parent directory path for the storage file.
+     * @param filename Name of the storage file.
+     */
     public Storage(String parent, String filename) {
         path = Paths.get(parent, filename);
     }
 
+    /**
+     * Loads tasks from the storage file into a list.
+     *
+     * @return List containing the loaded tasks.
+     * @throws JasperException If an error occurs during reading or parsing the file.
+     */
     public List<Task> load() throws JasperException {
         List<Task> tasks = new ArrayList<>(100);
         try {
@@ -53,6 +69,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the current list of tasks to the storage file.
+     *
+     * @param tasks List of tasks to save.
+     * @throws JasperException If an error occurs while writing to the file.
+     */
     public void save(TaskList tasks) throws JasperException {
         try {
             Files.createDirectories(path.getParent());

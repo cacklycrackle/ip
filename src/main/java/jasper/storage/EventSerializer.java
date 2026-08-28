@@ -6,12 +6,28 @@ import jasper.task.Event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Provides methods to serialize and deserialize Event tasks.
+ */
 public class EventSerializer {
+    /**
+     * Serializes an Event task into a formatted string.
+     *
+     * @param e Event task to serialize.
+     * @return Formatted string representation of the task.
+     */
     public static String serialize(Event e) {
         int status = e.getDone() ? 1 : 0;
         return "E | " + status + " | " + e.getDescription() + " | " + e.getFrom() + " | " + e.getTo();
     }
 
+    /**
+     * Deserializes a formatted string into an Event task.
+     *
+     * @param line String representation of the task to be parsed.
+     * @return Deserialized Event task.
+     * @throws JasperException If the string format is invalid or cannot be parsed.
+     */
     public static Event deserialize(String line) throws JasperException {
         String[] parts = line.split(" \\| ", 5);
         if (parts.length < 5) {

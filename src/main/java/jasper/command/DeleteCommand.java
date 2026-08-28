@@ -4,9 +4,19 @@ import jasper.JasperException;
 import jasper.task.Task;
 import jasper.task.TaskList;
 
+/**
+ * Represents a command to delete a task from the list of tasks.
+ */
 public class DeleteCommand implements Command {
+    /** 0-based index of the task to be deleted */
     private final int n;
 
+    /**
+     * Constructs a DeleteCommand by parsing the task index.
+     *
+     * @param arg The argument string containing the 1-based index of the task.
+     * @throws JasperException If the index is not a valid integer.
+     */
     public DeleteCommand(String arg) throws JasperException {
         try {
             this.n = Integer.parseInt(arg) - 1;

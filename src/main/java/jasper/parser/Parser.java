@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import jasper.command.FindCommand;
 
 public class Parser {
     public static Command parseCmd(String line) throws JasperException {
@@ -29,6 +30,7 @@ public class Parser {
             case "todo" -> new TodoCommand(arg);
             case "deadline" -> new DeadlineCommand(arg);
             case "event" -> new EventCommand(arg);
+            case "find" -> new FindCommand(arg);
             default -> throw new JasperException("Unknown command: " + tokens[0]);
         };
     }

@@ -1,10 +1,10 @@
 package jasper.task;
 
-import jasper.JasperException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import jasper.JasperException;
 
 public class TaskList implements Iterable<Task> {
     private final List<Task> tasks;
@@ -52,6 +52,23 @@ public class TaskList implements Iterable<Task> {
         Task t = tasks.get(n);
         t.markUndone();
         return t;
+    }
+
+    /**
+     * Returns a formatted string containing all tasks that match the given search phrase.
+     *
+     * @param phrase Search phrase to match against task descriptions.
+     * @return Formatted string of all matching tasks.
+     */
+    public String find(String phrase) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tasks.size(); ++i) {
+            Task t = tasks.get(i);
+            if (t.getDescription().contains(phrase)) {
+                sb.append(i + 1).append(". ").append(t).append('\n');
+            }
+        }
+        return sb.toString();
     }
 
     @Override

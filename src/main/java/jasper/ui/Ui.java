@@ -47,7 +47,7 @@ public class Ui {
         System.out.print("""
                 Hello! I'm Jasper. Whatever shalt thou require of me today?
                 Supported commands:
-                    bye, list, unmark, mark, delete, todo, deadline, event
+                    bye, list, find, unmark, mark, delete, todo, deadline, event
                 """.indent(4)
         );
         showLine();

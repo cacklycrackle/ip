@@ -105,6 +105,23 @@ public class TaskList implements Iterable<Task> {
         return t;
     }
 
+    /**
+     * Returns a formatted string containing all tasks that match the given search phrase.
+     *
+     * @param phrase Search phrase to match against task descriptions.
+     * @return Formatted string of all matching tasks.
+     */
+    public String find(String phrase) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tasks.size(); ++i) {
+            Task t = tasks.get(i);
+            if (t.getDescription().contains(phrase)) {
+                sb.append(i + 1).append(". ").append(t).append('\n');
+            }
+        }
+        return sb.toString();
+    }
+
     @Override
     public Iterator<Task> iterator() {
         return tasks.iterator();

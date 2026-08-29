@@ -11,6 +11,7 @@ import jasper.command.Command;
 import jasper.command.DeadlineCommand;
 import jasper.command.DeleteCommand;
 import jasper.command.EventCommand;
+import jasper.command.FindCommand;
 import jasper.command.ListCommand;
 import jasper.command.MarkCommand;
 import jasper.command.TodoCommand;
@@ -39,6 +40,7 @@ public class Parser {
             case "todo" -> new TodoCommand(arg);
             case "deadline" -> new DeadlineCommand(arg);
             case "event" -> new EventCommand(arg);
+            case "find" -> new FindCommand(arg);
             default -> throw new JasperException("Unknown command: " + tokens[0]);
         };
     }

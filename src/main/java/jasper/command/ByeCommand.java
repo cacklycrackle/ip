@@ -20,12 +20,7 @@ public class ByeCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) {
-        return "Farewell. Hope to see you again soon!";
-    }
-
-    @Override
-    public boolean isQuit() {
-        return true;
+    public CommandResult execute(TaskList tasks) {
+        return new CommandResult(CommandType.QUIT, "Farewell. Hope to see you again soon!");
     }
 }

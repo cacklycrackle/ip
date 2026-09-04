@@ -26,9 +26,9 @@ public class UnmarkCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) throws JasperException {
+    public CommandResult execute(TaskList tasks) throws JasperException {
         Task t = tasks.unmark(index);
-        return "Get to work... I've marked this task as not done yet\n  " + t;
-
+        return new CommandResult(CommandType.UNMARK,
+                "Get to work... I've marked this task as not done yet\n  " + t);
     }
 }

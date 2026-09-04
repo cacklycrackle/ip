@@ -26,10 +26,10 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) throws JasperException {
+    public CommandResult execute(TaskList tasks) throws JasperException {
         Task t = tasks.delete(index);
-        return "This task shall be terminated, if you insist:\n  " + t
-                + "\n1 task down, " + tasks.size() + " to go.";
+        return new CommandResult(CommandType.DELETE, "This task shall be terminated, if you insist:\n  " + t
+                + "\n1 task down, " + tasks.size() + " to go.");
 
     }
 }

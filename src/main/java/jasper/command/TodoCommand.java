@@ -26,8 +26,8 @@ public class TodoCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) {
+    public CommandResult execute(TaskList tasks) {
         tasks.add(task);
-        return "Aye, aye. I've added this task:\n  " + task;
+        return new CommandResult(CommandType.TODO, "Aye, aye. I've added this task:\n  " + task);
     }
 }

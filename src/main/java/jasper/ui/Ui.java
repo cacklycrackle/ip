@@ -2,6 +2,8 @@ package jasper.ui;
 
 import java.util.Scanner;
 
+import jasper.command.CommandResult;
+
 /**
  * Handles the user interface interactions including reading input and displaying output.
  */
@@ -38,14 +40,6 @@ public class Ui {
     }
 
     /**
-     * Displays an error message formatted with red text.
-     */
-    public void showError(String errMessage) {
-        String s = ANSI_RED + "Something is amiss... " + ANSI_RESET + errMessage;
-        showResponse(s);
-    }
-
-    /**
      * Prints the predefined separator line to the console.
      */
     public void showLine() {
@@ -53,10 +47,15 @@ public class Ui {
     }
 
     /**
-     * Displays a formatted response message to the user.
+     * Displays a formatted response or error message to the user based on their command's result.
      */
-    public void showResponse(String message) {
-        System.out.print(message.indent(4));
+    public void showResponse(CommandResult result) {
+        String prefix = switch (result.commandType()) {
+            case ERROR -> ANSI_RED + "Something is amiss... " + ANSI_RESET;
+            default -> "";
+        };
+        String output = prefix + result.response();
+        System.out.print(output.indent(4));
     }
 
     /**

@@ -24,14 +24,14 @@ public class FindCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) {
+    public CommandResult execute(TaskList tasks) {
         if (tasks.isEmpty()) {
-            return "No tasks here! Add some to search through.";
+            return new CommandResult(CommandType.FIND, "No tasks here! Add some to search through.");
         }
         String response = tasks.find(phrase);
         if (response.isEmpty()) {
-            return "Where might the matching tasks be?";
+            return new CommandResult(CommandType.FIND, "Where might the matching tasks be?");
         }
-        return "Matching tasks, here you go:\n" + tasks.find(phrase);
+        return new CommandResult(CommandType.FIND, "Matching tasks, here you go:\n" + tasks.find(phrase));
     }
 }

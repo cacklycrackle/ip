@@ -33,8 +33,8 @@ public class DeadlineCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) {
+    public CommandResult execute(TaskList tasks) {
         tasks.add(task);
-        return "Aye, aye. I've added this task:\n  " + task;
+        return new CommandResult(CommandType.DEADLINE, "Aye, aye. I've added this task:\n  " + task);
     }
 }

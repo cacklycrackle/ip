@@ -20,10 +20,10 @@ public class ListCommand implements Command {
     }
 
     @Override
-    public String execute(TaskList tasks) {
+    public CommandResult execute(TaskList tasks) {
         if (tasks.isEmpty()) {
-            return "No tasks here! Add some to track.";
+            return new CommandResult(CommandType.LIST, "No tasks here! Add some to track.");
         }
-        return "Here are your tasks:\n" + tasks;
+        return new CommandResult(CommandType.LIST, "Here are your tasks:\n" + tasks);
     }
 }

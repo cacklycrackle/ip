@@ -53,7 +53,7 @@ test {
 }
 
 application {
-    mainClass = 'jasper.CliMain'
+    mainClass = 'jasper.GuiLauncher'
 }
 
 jar {

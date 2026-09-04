@@ -24,6 +24,7 @@ public class ByeCommandTest {
             fail();
         }
     }
+
     @Test
     public void constructor_nonemptyArgument_exceptionThrown() {
         try {

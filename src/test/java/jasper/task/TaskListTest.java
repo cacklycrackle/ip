@@ -20,7 +20,7 @@ public class TaskListTest {
         try {
             Task result = tasks.delete(0);
             assertSame(stub, result);
-            assertEquals(0, tasks.size());
+            assertEquals(0, tasks.getCount());
         } catch (JasperException e) {
             fail();
         }
@@ -55,7 +55,6 @@ public class TaskListTest {
             fail();
         }
     }
-
 
     @Test
     void mark_invalidIndices_exceptionThrown() {

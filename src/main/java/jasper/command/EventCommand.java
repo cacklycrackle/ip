@@ -26,12 +26,12 @@ public class EventCommand implements Command {
             throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
         }
         String description = arg.substring(0, sepFrom).strip();
-        String dtFrom = arg.substring(sepFrom + 5, sepTo).strip();
-        String dtTo = arg.substring(sepTo + 3).strip();
-        if (description.isEmpty() || dtFrom.isEmpty() || dtTo.isEmpty()) {
+        String datetimeFrom = arg.substring(sepFrom + 5, sepTo).strip();
+        String datetimeTo = arg.substring(sepTo + 3).strip();
+        if (description.isEmpty() || datetimeFrom.isEmpty() || datetimeTo.isEmpty()) {
             throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
         }
-        task = new Event(description, Parser.parseDateTime(dtFrom), Parser.parseDateTime(dtTo));
+        task = new Event(description, Parser.parseDateTime(datetimeFrom), Parser.parseDateTime(datetimeTo));
     }
 
     @Override

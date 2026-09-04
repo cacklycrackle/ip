@@ -29,7 +29,7 @@ public class DeleteCommand implements Command {
     public CommandResult execute(TaskList tasks) throws JasperException {
         Task t = tasks.delete(index);
         return new CommandResult(CommandType.DELETE, "This task shall be terminated, if you insist:\n  " + t
-                + "\n1 task down, " + tasks.size() + " to go.");
+                + "\n1 task down, " + tasks.getCount() + " to go.");
 
     }
 }

@@ -52,7 +52,7 @@ public class TaskList implements Iterable<Task> {
     /**
      * Returns the number of tasks in the list.
      */
-    public int size() {
+    public int getCount() {
         return tasks.size();
     }
 

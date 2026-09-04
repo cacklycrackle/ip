@@ -25,11 +25,11 @@ public class DeadlineCommand implements Command {
             throw new JasperException("Usage: deadline <task> /by <datetime>");
         }
         String description = arg.substring(0, sep).strip();
-        String dt = arg.substring(sep + 3).strip();
-        if (description.isEmpty() || dt.isEmpty()) {
+        String datetime = arg.substring(sep + 3).strip();
+        if (description.isEmpty() || datetime.isEmpty()) {
             throw new JasperException("Usage: deadline <task> /by <datetime>");
         }
-        task = new Deadline(description, Parser.parseDateTime(dt));
+        task = new Deadline(description, Parser.parseDateTime(datetime));
     }
 
     @Override

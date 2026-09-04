@@ -5,9 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import jasper.JasperException;
+import jasper.task.Task;
+import jasper.task.TaskList;
+import jasper.task.TaskStub;
 
 public class ByeCommandTest {
     @Test
@@ -32,7 +37,10 @@ public class ByeCommandTest {
     @Test
     public void isQuit_emptyArgument_returnsTrue() {
         try {
-            assertTrue(new ByeCommand("").isQuit());
+            Task stub = new TaskStub();
+            TaskList tasks = new TaskList(List.of(stub));
+            CommandResult result = new ByeCommand("").execute(tasks);
+            assertTrue(result.isQuit());
         } catch (JasperException e) {
             fail();
         }

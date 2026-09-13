@@ -42,6 +42,7 @@ public class Jasper {
     public CommandResult getResult(String input) {
         try {
             Command c = Parser.parseCmd(input);
+            assert tasks != null : "Task list missing";
             CommandResult result = c.execute(tasks);
             storage.save(tasks);
             return result;

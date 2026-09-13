@@ -92,6 +92,7 @@ public class DialogBox extends HBox {
      * @param cmdType Type of command that was executed.
      */
     private void changeDialogStyle(CommandType cmdType) {
+        assert cmdType != null : "Result of executing command is missing";
         switch(cmdType) {
             case TODO:
                 // Fallthrough

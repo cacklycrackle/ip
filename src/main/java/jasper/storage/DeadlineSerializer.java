@@ -10,6 +10,9 @@ import jasper.task.Deadline;
  * Provides methods to serialize and deserialize Deadline tasks.
  */
 public class DeadlineSerializer {
+    /** Number of chunks in saved format that represent different parameters  */
+    private static final int NUM_PARTS = 4;
+
     /**
      * Serializes a Deadline task into a formatted string.
      *
@@ -29,8 +32,8 @@ public class DeadlineSerializer {
      * @throws JasperException If the string format is invalid or cannot be parsed.
      */
     public static Deadline deserialize(String line) throws JasperException {
-        String[] parts = line.split(" \\| ", 4);
-        if (parts.length < 4) {
+        String[] parts = line.split(" \\| ", NUM_PARTS);
+        if (parts.length < NUM_PARTS) {
             throw new JasperException("Error reading or loading savefile!");
         }
         Deadline deadline;

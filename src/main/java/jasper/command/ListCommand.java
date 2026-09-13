@@ -7,6 +7,9 @@ import jasper.task.TaskList;
  * Represents a command to list all tasks.
  */
 public class ListCommand implements Command {
+    /** Valid command format message */
+    private static final String USAGE_MSG = "Usage: list";
+
     /**
      * Constructs a ListCommand and validates the argument.
      *
@@ -15,7 +18,7 @@ public class ListCommand implements Command {
      */
     public ListCommand(String arg) throws JasperException {
         if (!arg.isEmpty()) {
-            throw new JasperException("Usage: list");
+            throw new JasperException(USAGE_MSG);
         }
     }
 

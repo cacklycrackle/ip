@@ -27,7 +27,10 @@ public class Task {
         return isDone;
     }
 
-    public String getStatusIcon() {
+    /**
+     * Returns a string icon representing whether a task is completed.
+     */
+    private String getStatusIcon() {
         return isDone ? "X" : " ";
     }
 

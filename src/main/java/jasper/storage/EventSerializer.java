@@ -10,6 +10,9 @@ import jasper.task.Event;
  * Provides methods to serialize and deserialize Event tasks.
  */
 public class EventSerializer {
+    /** Number of chunks in saved format that represent different parameters  */
+    private static final int NUM_PARTS = 5;
+
     /**
      * Serializes an Event task into a formatted string.
      *
@@ -29,8 +32,8 @@ public class EventSerializer {
      * @throws JasperException If the string format is invalid or cannot be parsed.
      */
     public static Event deserialize(String line) throws JasperException {
-        String[] parts = line.split(" \\| ", 5);
-        if (parts.length < 5) {
+        String[] parts = line.split(" \\| ", NUM_PARTS);
+        if (parts.length < NUM_PARTS) {
             throw new JasperException("Error reading or loading savefile!");
         }
         Event event;

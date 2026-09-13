@@ -3,6 +3,7 @@ package jasper.task;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import jasper.JasperException;
 
@@ -120,6 +121,13 @@ public class TaskList implements Iterable<Task> {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Returns a sequential stream over the tasks in this list.
+     */
+    public Stream<Task> stream() {
+        return tasks.stream();
     }
 
     @Override

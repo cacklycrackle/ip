@@ -1,13 +1,13 @@
 package jasper.storage;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import jasper.JasperException;
 import jasper.task.Deadline;
@@ -39,32 +39,49 @@ public class Storage {
      * @return List containing the loaded tasks.
      * @throws JasperException If an error occurs during reading or parsing the file.
      */
-    public List<Task> load() throws JasperException {
-        List<Task> tasks = new ArrayList<>(100);
+    public TaskList load() throws JasperException {
         try {
             if (!Files.exists(path)) {
                 Files.createDirectories(path.getParent());
                 Files.createFile(path);
-                return tasks;
+                return new TaskList();
             }
-            BufferedReader reader = Files.newBufferedReader(path);
-            while (true) {
-                String line = reader.readLine();
-                if (line == null) {
-                    break;
-                }
-                Task task = switch (line.charAt(0)) {
-                    case 'T' -> TodoSerializer.deserialize(line);
-                    case 'D' -> DeadlineSerializer.deserialize(line);
-                    case 'E' -> EventSerializer.deserialize(line);
-                    default -> throw new JasperException("Error reading or loading savefile!");
-                };
-                tasks.add(task);
+            // try-with stmt ensures stream's open file reference is closed after completion
+            // any IOExceptions can be caught by outer catch
+            try (Stream<String> lines = Files.lines(path)) {
+                return new TaskList(lines
+                        .map(String::trim)
+                        .map(Storage::parseTaskFromLine)
+                        .flatMap(Optional::stream)
+                        .toList()
+                );
             }
-            reader.close();
-            return tasks;
-        } catch (IOException | DateTimeParseException e) {
-            throw new JasperException("Error reading or loading savefile!");
+        } catch (IOException e) {
+            throw new JasperException("Error loading saved tasks: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Parses a string line from the save file into a Task object.
+     *
+     * @param line String representation of a task from the save file.
+     * @return An Optional describing the parsed Task, or an empty Optional if the line is improperly formatted.
+     */
+    private static Optional<Task> parseTaskFromLine(String line) {
+        assert line != null : "Invalid element from lines stream";
+        if (line.isEmpty()) {
+            return Optional.empty();
+        }
+        try {
+            Task task = switch (line.charAt(0)) {
+                case 'T' -> TodoSerializer.deserialize(line);
+                case 'D' -> DeadlineSerializer.deserialize(line);
+                case 'E' -> EventSerializer.deserialize(line);
+                default -> throw new JasperException("Error reading savefile!");
+            };
+            return Optional.of(task);
+        } catch (JasperException e) {
+            return Optional.empty(); // skip lines in wrong format
         }
     }
 
@@ -77,19 +94,28 @@ public class Storage {
     public void save(TaskList tasks) throws JasperException {
         try {
             Files.createDirectories(path.getParent());
-            List<String> lines = new ArrayList<>();
-            for (Task task : tasks) {
-                String entry = switch (task) {
-                    case Todo t -> TodoSerializer.serialize(t);
-                    case Deadline d -> DeadlineSerializer.serialize(d);
-                    case Event e -> EventSerializer.serialize(e);
-                    default -> throw new IllegalStateException("Unsupported task type!");
-                };
-                lines.add(entry);
-            }
+            List<String> lines = tasks.stream()
+                    .map(Storage::parseLineFromTask)
+                    .toList();
             Files.write(path, lines);
         } catch (IOException e) {
-            throw new JasperException("Could not save tasks: " + e.getMessage());
+            throw new JasperException("Error saving tasks: " + e.getMessage());
         }
+    }
+
+    /**
+     * Parses a Task object into its corresponding string representation for saving.
+     *
+     * @param task Task to be serialized.
+     * @return Serialized string representation of the task.
+     * @throws IllegalStateException If support for the task type is not implemented.
+     */
+    private static String parseLineFromTask(Task task) {
+        return switch (task) {
+            case Todo t -> TodoSerializer.serialize(t);
+            case Deadline d -> DeadlineSerializer.serialize(d);
+            case Event e -> EventSerializer.serialize(e);
+            default -> throw new IllegalStateException("Unsupported task type!");
+        };
     }
 }

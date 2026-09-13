@@ -26,7 +26,7 @@ public class Jasper {
         storage = new Storage(parent, filename);
         TaskList tmp;
         try {
-            tmp = new TaskList(storage.load());
+            tmp = storage.load();
         } catch (JasperException e) {
             tmp = new TaskList();
         }

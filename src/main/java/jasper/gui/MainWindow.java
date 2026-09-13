@@ -37,6 +37,9 @@ public class MainWindow {
      */
     @FXML
     public void initialize() {
+        assert dialogs != null : "fx:id=\"dialogs\" component not injected successfully";
+        assert userInput != null : "fx:id=\"userInput\" component not injected successfully";
+        assert sendButton != null : "fx:id=\"sendButton\" component not injected successfully";
         dialogs.setFocusTraversable(false);
     }
 
@@ -56,6 +59,8 @@ public class MainWindow {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        assert input != null : "User text input string is missing";
+        assert jasper != null : "Jasper instance is missing";
         CommandResult result = jasper.getResult(input);
         dialogs.getItems().addAll(
                 DialogBox.getUserDialog(input, userImage),

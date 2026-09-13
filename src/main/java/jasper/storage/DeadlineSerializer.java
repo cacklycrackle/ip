@@ -34,13 +34,13 @@ public class DeadlineSerializer {
     public static Deadline deserialize(String line) throws JasperException {
         String[] parts = line.split(" \\| ", NUM_PARTS);
         if (parts.length < NUM_PARTS) {
-            throw new JasperException("Error reading or loading savefile!");
+            throw new JasperException("Error reading savefile!");
         }
         Deadline deadline;
         try {
             deadline = new Deadline(parts[2], LocalDateTime.parse(parts[3]));
         } catch (DateTimeParseException e) {
-            throw new JasperException("Error reading or loading savefile!");
+            throw new JasperException("Error reading savefile!");
         }
         if (parts[1].equals("1")) {
             deadline.markDone();

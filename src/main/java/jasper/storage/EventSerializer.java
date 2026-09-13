@@ -34,13 +34,13 @@ public class EventSerializer {
     public static Event deserialize(String line) throws JasperException {
         String[] parts = line.split(" \\| ", NUM_PARTS);
         if (parts.length < NUM_PARTS) {
-            throw new JasperException("Error reading or loading savefile!");
+            throw new JasperException("Error reading savefile!");
         }
         Event event;
         try {
             event = new Event(parts[2], LocalDateTime.parse(parts[3]), LocalDateTime.parse(parts[4]));
         } catch (DateTimeParseException e) {
-            throw new JasperException("Error reading or loading savefile!");
+            throw new JasperException("Error reading savefile!");
         }
         if (parts[1].equals("1")) {
             event.markDone();

@@ -31,7 +31,7 @@ public class TodoSerializer {
     public static Todo deserialize(String line) throws JasperException {
         String[] parts = line.split(" \\| ", NUM_PARTS);
         if (parts.length < NUM_PARTS) {
-            throw new JasperException("Error reading or loading savefile!");
+            throw new JasperException("Error reading savefile!");
         }
         Todo todo = new Todo(parts[2]);
         if (parts[1].equals("1")) {

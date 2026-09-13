@@ -7,6 +7,9 @@ import jasper.task.TaskList;
  * Represents a command to exit the application.
  */
 public class ByeCommand implements Command {
+    /** Valid command format message */
+    private static final String USAGE_MSG = "Usage: bye";
+
     /**
      * Constructs a ByeCommand and validates the argument.
      *
@@ -15,7 +18,7 @@ public class ByeCommand implements Command {
      */
     public ByeCommand(String arg) throws JasperException {
         if (!arg.isEmpty()) {
-            throw new JasperException("Usage: bye");
+            throw new JasperException(USAGE_MSG);
         }
     }
 

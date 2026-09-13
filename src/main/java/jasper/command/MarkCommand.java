@@ -8,6 +8,8 @@ import jasper.task.TaskList;
  * Represents a command to mark a task as completed.
  */
 public class MarkCommand implements Command {
+    /** Valid command format message */
+    private static final String USAGE_MSG = "Usage: mark N (integer task index)";
     /** 0-based index of the task to be marked */
     private final int index;
 
@@ -21,7 +23,7 @@ public class MarkCommand implements Command {
         try {
             index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
-            throw new JasperException("Usage: mark N (integer task index)");
+            throw new JasperException(USAGE_MSG);
         }
     }
 

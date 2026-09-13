@@ -9,6 +9,8 @@ import jasper.task.Todo;
  * Represents a command to add a todo task.
  */
 public class TodoCommand implements Command {
+    /** Valid command format message */
+    private static final String USAGE_MSG = "Usage: todo <task>";
     /** Todo task to be added */
     private final Task task;
 
@@ -20,7 +22,7 @@ public class TodoCommand implements Command {
      */
     public TodoCommand(String arg) throws JasperException {
         if (arg.isEmpty()) {
-            throw new JasperException("Usage: todo <task>");
+            throw new JasperException(USAGE_MSG);
         }
         task = new Todo(arg);
     }

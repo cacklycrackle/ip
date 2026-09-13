@@ -8,6 +8,8 @@ import jasper.task.TaskList;
  * Represents a command to delete a task from the list of tasks.
  */
 public class DeleteCommand implements Command {
+    /** Valid command format message */
+    private static final String USAGE_MSG = "Usage: delete N (integer task index)";
     /** 0-based index of the task to be deleted */
     private final int index;
 
@@ -21,7 +23,7 @@ public class DeleteCommand implements Command {
         try {
             index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
-            throw new JasperException("Usage: delete N (integer task index)");
+            throw new JasperException(USAGE_MSG);
         }
     }
 

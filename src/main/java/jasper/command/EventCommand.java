@@ -10,6 +10,14 @@ import jasper.task.TaskList;
  * Represents a command to add an event task.
  */
 public class EventCommand implements Command {
+    /** Keyword separating task and start datetime */
+    private static final String FROM_KW = "/from";
+    /** Keyword separating start and end datetime */
+    private static final String TO_KW = "/to";
+    /** Valid command format message */
+    private static final String USAGE_MSG = String.format(
+            "Usage: event <task> %s <datetime> %s <datetime>", FROM_KW, TO_KW
+    );
     /** Event task to be added */
     private final Task task;
 
@@ -20,16 +28,16 @@ public class EventCommand implements Command {
      * @throws JasperException If the argument format is invalid.
      */
     public EventCommand(String arg) throws JasperException {
-        int sepFrom = arg.lastIndexOf("/from");
-        int sepTo = arg.lastIndexOf("/to");
+        int sepFrom = arg.lastIndexOf(FROM_KW);
+        int sepTo = arg.lastIndexOf(TO_KW);
         if (sepFrom == -1 || sepTo == -1 || sepTo < sepFrom) {
-            throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
+            throw new JasperException(USAGE_MSG);
         }
         String description = arg.substring(0, sepFrom).strip();
-        String datetimeFrom = arg.substring(sepFrom + 5, sepTo).strip();
-        String datetimeTo = arg.substring(sepTo + 3).strip();
+        String datetimeFrom = arg.substring(sepFrom + FROM_KW.length(), sepTo).strip();
+        String datetimeTo = arg.substring(sepTo + TO_KW.length()).strip();
         if (description.isEmpty() || datetimeFrom.isEmpty() || datetimeTo.isEmpty()) {
-            throw new JasperException("Usage: event <task> /from <datetime> /to <datetime>");
+            throw new JasperException(USAGE_MSG);
         }
         task = new Event(description, Parser.parseDateTime(datetimeFrom), Parser.parseDateTime(datetimeTo));
     }

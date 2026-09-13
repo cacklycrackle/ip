@@ -7,6 +7,9 @@ import jasper.task.Todo;
  * Provides methods to serialize and deserialize Todo tasks.
  */
 public class TodoSerializer {
+    /** Number of chunks in saved format that represent different parameters */
+    private static final int NUM_PARTS = 3;
+
     /**
      * Serializes a Todo task into a formatted string.
      *
@@ -26,9 +29,9 @@ public class TodoSerializer {
      * @throws JasperException If the string format is invalid.
      */
     public static Todo deserialize(String line) throws JasperException {
-        String[] parts = line.split(" \\| ", 3);
-        if (parts.length < 3) {
-            throw new JasperException("Error reading or loading savefile!");
+        String[] parts = line.split(" \\| ", NUM_PARTS);
+        if (parts.length < NUM_PARTS) {
+            throw new JasperException("Error reading savefile!");
         }
         Todo todo = new Todo(parts[2]);
         if (parts[1].equals("1")) {

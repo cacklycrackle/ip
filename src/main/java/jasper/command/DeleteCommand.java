@@ -5,23 +5,35 @@ import jasper.task.Task;
 import jasper.task.TaskList;
 
 /**
- * Represents a command to delete a task from the list of tasks.
+ * Represents a command to delete a task(s) from the list of tasks.
  */
 public class DeleteCommand implements Command {
     /** Valid command format message */
     private static final String USAGE_MSG = "Usage: delete N (integer task index)";
-    /** 0-based index of the task to be deleted */
-    private final int index;
+    /** 0-based first index of tasks in range to be deleted */
+    private final int startIndex;
+    /** 0-based last index of tasks in range to be deleted */
+    private final int stopIndex;
 
     /**
-     * Constructs a DeleteCommand by parsing the task index.
+     * Constructs a DeleteCommand by parsing the task index(es).
      *
-     * @param arg The argument string containing the 1-based index of the task.
+     * @param arg The argument string containing the 1-based task index(es).
      * @throws JasperException If the index is not a valid integer.
      */
     public DeleteCommand(String arg) throws JasperException {
+        String[] parts = arg.split("\\.\\.");
+        if (parts.length > 2) {
+            throw new JasperException(USAGE_MSG);
+        }
         try {
-            index = Integer.parseInt(arg) - 1;
+            startIndex = Integer.parseInt(parts[0]) - 1;
+            stopIndex = (parts.length == 1)
+                    ? startIndex
+                    : Integer.parseInt(parts[1]) - 1;
+            if (startIndex > stopIndex) {
+                throw new JasperException("Start index cannot exceed stop index!");
+            }
         } catch (NumberFormatException e) {
             throw new JasperException(USAGE_MSG);
         }
@@ -29,9 +41,15 @@ public class DeleteCommand implements Command {
 
     @Override
     public CommandResult execute(TaskList tasks) throws JasperException {
-        Task t = tasks.delete(index);
-        return new CommandResult(CommandType.DELETE, "This task shall be terminated, if you insist:\n  " + t
-                + "\n1 task down, " + tasks.getCount() + " to go.");
-
+        StringBuilder sb = new StringBuilder("These shall be terminated, if you insist:");
+        Task[] buf = new Task[stopIndex - startIndex + 1];
+        for (int i = buf.length - 1; i >= 0; --i) {
+            buf[i] = tasks.delete(startIndex + i);
+        }
+        for (int i = 0; i < buf.length; ++i) {
+            sb.append("\n  ").append(startIndex + i + 1).append(". ").append(buf[i]);
+        }
+        sb.append('\n').append(String.format("%d tasks down, %d to go.", buf.length, tasks.getCount()));
+        return new CommandResult(CommandType.DELETE, sb.toString());
     }
 }

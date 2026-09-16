@@ -11,8 +11,8 @@ public class MarkCommand implements Command {
     /** Valid command formats message */
     private static final String USAGE_MSG = """
             Usage (with positive integers indices):
-                for single task:    mark N (single task)
-                for multiple tasks: mark start..stop (both inclusive, start <= stop)
+                mark N (single task)
+                mark start..stop (multiple tasks, both tasks inclusive, start <= stop)
             """;
     /** 0-based first index of tasks in range to be marked as done */
     private final int startIndex;

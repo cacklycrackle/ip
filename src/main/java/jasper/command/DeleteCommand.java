@@ -9,7 +9,11 @@ import jasper.task.TaskList;
  */
 public class DeleteCommand implements Command {
     /** Valid command format message */
-    private static final String USAGE_MSG = "Usage: delete N (integer task index)";
+    private static final String USAGE_MSG = """
+            Usage (with positive integers indices):
+                delete N (single task)
+                delete start..stop (multiple tasks, both indices inclusive, start <= stop)
+            """;
     /** 0-based first index of tasks in range to be deleted */
     private final int startIndex;
     /** 0-based last index of tasks in range to be deleted */

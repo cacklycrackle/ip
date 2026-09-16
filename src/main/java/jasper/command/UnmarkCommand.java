@@ -11,8 +11,8 @@ public class UnmarkCommand implements Command {
     /** Valid command format message */
     private static final String USAGE_MSG = """
             Usage (with positive integers indices):
-                for single task:    unmark N (single task)
-                for multiple tasks: unmark start..stop (both inclusive, start <= stop)
+                unmark N (single task)
+                unmark start..stop (multiple tasks, both tasks inclusive, start <= stop)
             """;
     /** 0-based first index of tasks in range to be marked as undone */
     private final int startIndex;

@@ -1,7 +1,5 @@
 .root {
-    -fx-background-color: #f4f7f6;
-    -fx-background-image: url("../images/background.jpg"); /* Set image */
-    -fx-background-size: stretch;
+    -fx-background-color: #b5f6f5;
 }
 
 .text-field {
@@ -42,7 +40,7 @@
 }
 
 .list-view {
-    -fx-background-color: rgba(0,0,0,.5);
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }

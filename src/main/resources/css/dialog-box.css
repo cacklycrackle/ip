@@ -40,6 +40,7 @@
     -fx-background-color: #ffebee;
     -fx-border-color: #f44336;
     -fx-text-fill: #c62828;
+    -fx-font-weight: bold;
 }
 
 #displayPic {

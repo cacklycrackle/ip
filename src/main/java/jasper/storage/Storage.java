@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -58,6 +59,25 @@ public class Storage {
         } catch (IOException e) {
             throw new JasperException("Error loading saved tasks: " + e.getMessage());
         }
+    }
+
+    /**
+     * Creates a backup savefile.
+     *
+     * @return Name of backup savefile.
+     * @throws JasperException If an error occurs when creating backup savefile.
+     */
+    public String backup() throws JasperException {
+        String backupName = path.getFileName() + ".bak";
+        Path backupPath = path.resolveSibling(backupName);
+        try {
+            if (Files.exists(path)) {
+                Files.move(path, backupPath, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            throw new JasperException("Failed to back up corrupted savefile: " + e.getMessage());
+        }
+        return backupName;
     }
 
     /**

@@ -36,6 +36,10 @@ public class Ui {
      * Reads the next command line from the user.
      */
     public String readCommand() {
+        if (!scanner.hasNextLine()) {
+            System.out.println();
+            return "bye";
+        }
         String input = scanner.nextLine();
         assert input != null : "User text input string is missing";
         return input.strip();

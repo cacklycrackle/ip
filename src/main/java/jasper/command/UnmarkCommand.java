@@ -1,7 +1,6 @@
 package jasper.command;
 
 import jasper.JasperException;
-import jasper.task.Task;
 import jasper.task.TaskList;
 
 /**
@@ -32,12 +31,7 @@ public class UnmarkCommand implements Command {
         }
         try {
             startIndex = Integer.parseInt(parts[0]) - 1;
-            stopIndex = (parts.length == 1)
-                    ? startIndex
-                    : Integer.parseInt(parts[1]) - 1;
-            if (startIndex > stopIndex) {
-                throw new JasperException("Start index cannot exceed stop index!");
-            }
+            stopIndex = (parts.length == 1) ? startIndex : Integer.parseInt(parts[1]) - 1;
         } catch (NumberFormatException e) {
             throw new JasperException(USAGE_MSG);
         }
@@ -45,11 +39,8 @@ public class UnmarkCommand implements Command {
 
     @Override
     public CommandResult execute(TaskList tasks) throws JasperException {
-        StringBuilder sb = new StringBuilder("Get to work... I've marked these tasks as not done yet:");
-        for (int i = startIndex; i <= stopIndex; ++i) {
-            Task t = tasks.unmark(i);
-            sb.append("\n  ").append(i + 1).append(". ").append(t);
-        }
-        return new CommandResult(CommandType.UNMARK, sb.toString());
+        String unmarked = tasks.unmark(startIndex, stopIndex);
+        String output = "Get to work... I've marked these tasks as not done yet:" + unmarked.indent(2);
+        return new CommandResult(CommandType.UNMARK, output);
     }
 }

@@ -33,13 +33,17 @@ public class TaskList implements Iterable<Task> {
     /**
      * Checks if the given index is valid within the specified task list.
      *
-     * @param index 0-based index to validate.
+     * @param start 0-based starting index of range to validate.
+     * @param stop 0-based last index of range to validate.
      * @param tasks List of tasks to check against.
      * @throws JasperException If the index is out of bounds.
      */
-    private static void check(int index, List<Task> tasks) throws JasperException {
-        if (index < 0 || index >= tasks.size()) {
+    private static void checkRange(List<Task> tasks, int start, int stop) throws JasperException {
+        if (start < 0 || stop >= tasks.size()) {
             throw new JasperException("Task index out of range!");
+        }
+        if (start > stop) {
+            throw new JasperException("Start index must be at most stop index!");
         }
     }
 
@@ -67,43 +71,62 @@ public class TaskList implements Iterable<Task> {
     }
 
     /**
-     * Deletes the task at the specified index.
+     * Deletes the tasks in the specified inclusive range of indices.
      *
-     * @param n 0-based index of the task to delete.
-     * @return Task that was removed.
-     * @throws JasperException If the index is out of bounds.
+     * @param start 0-based index of first task to delete.
+     * @param stop 0-based index of last task to delete.
+     * @return Formatted string of deleted tasks.
+     * @throws JasperException If the indices are out of bounds.
      */
-    public Task delete(int n) throws JasperException {
-        check(n, tasks);
-        return tasks.remove(n);
+    public String delete(int start, int stop) throws JasperException {
+        checkRange(tasks, start, stop);
+        StringBuilder sb = new StringBuilder();
+        Task[] removed = new Task[stop - start + 1];
+        for (int i = removed.length - 1; i >= 0; --i) {
+            removed[i] = tasks.remove(start + i);
+        }
+        for (int i = 0; i < removed.length; ++i) {
+            sb.append("\n  ").append(start + i + 1).append(". ").append(removed[i]);
+        }
+        return sb.toString();
     }
 
     /**
-     * Marks the task at the specified index as completed.
+     * Marks the tasks in the specified inclusive range of indices as completed.
      *
-     * @param n 0-based index of the task to mark.
-     * @return Task that was marked.
-     * @throws JasperException If the index is out of bounds.
+     * @param start 0-based index of first task to mark.
+     * @param stop 0-based index of last task to mark.
+     * @return Formatted string of marked tasks.
+     * @throws JasperException If the indices are out of bounds.
      */
-    public Task mark(int n) throws JasperException {
-        check(n, tasks);
-        Task t = tasks.get(n);
-        t.markDone();
-        return t;
+    public String mark(int start, int stop) throws JasperException {
+        checkRange(tasks, start, stop);
+        StringBuilder sb = new StringBuilder();
+        for (int i = start; i <= stop; ++i) {
+            Task t = tasks.get(i);
+            t.markDone();
+            sb.append("\n  ").append(i + 1).append(". ").append(t);
+        }
+        return sb.toString();
     }
 
     /**
      * Marks the task at the specified index as not completed.
      *
-     * @param n 0-based index of the task to unmark.
-     * @return Task that was unmarked.
-     * @throws JasperException If the index is out of bounds.
+     * @param start 0-based index of first task to unmark.
+     * @param stop 0-based index of last task to unmark.
+     * @return Formatted string of unmark tasks.
+     * @throws JasperException If the indices are out of bounds.
      */
-    public Task unmark(int n) throws JasperException {
-        check(n, tasks);
-        Task t = tasks.get(n);
-        t.markUndone();
-        return t;
+    public String unmark(int start, int stop) throws JasperException {
+        checkRange(tasks, start, stop);
+        StringBuilder sb = new StringBuilder();
+        for (int i = start; i <= stop; ++i) {
+            Task t = tasks.get(i);
+            t.markUndone();
+            sb.append("\n  ").append(i + 1).append(". ").append(t);
+        }
+        return sb.toString();
     }
 
     /**

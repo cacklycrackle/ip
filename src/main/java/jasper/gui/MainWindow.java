@@ -71,7 +71,7 @@ public class MainWindow {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getJasperDialog(result, jasperImage)
         );
-        dialogs.scrollTo(dialogs.getItems().size() - 1);
+        Platform.runLater(() -> dialogs.scrollTo(dialogs.getItems().size() - 1));
         userInput.clear();
 
         if (result.isQuit()) {

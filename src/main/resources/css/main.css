@@ -1,5 +1,7 @@
 .root {
     -fx-background-color: #b5f6f5;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
 }
 
 .text-field {
@@ -8,8 +10,6 @@
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
     -fx-padding: 10px 15px;
-    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-    -fx-font-size: 14px;
 }
 
 .text-field:focused {
@@ -21,14 +21,11 @@
 .button {
     -fx-background-color: #0078D7;
     -fx-text-fill: white;
-    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
     -fx-cursor: hand;
     -fx-padding: 8px 16px;
-    -fx-transition: -fx-background-color 0.2s;
 }
 
 .button:hover {
@@ -57,4 +54,11 @@
 /* Prevent blue highlight when a message is clicked */
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: transparent;
+}
+
+.help-bar {
+    -fx-alignment: center;
+    -fx-background-color: transparent;
+    -fx-text-fill: #555555;
+    -fx-font-size: 12px;
 }

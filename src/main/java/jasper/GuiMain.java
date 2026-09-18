@@ -28,6 +28,7 @@ public class GuiMain extends Application {
             // stage.setMaxWidth(417); // Add if elements not automatically resizable horizontally
             MainWindow controller = fxmlLoader.getController();
             controller.setJasper(jasper); // inject the Jasper instance
+            stage.setTitle("Jasper");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

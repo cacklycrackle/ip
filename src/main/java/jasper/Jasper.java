@@ -60,7 +60,15 @@ public class Jasper {
             Command c = Parser.parseCmd(input);
             assert tasks != null : "Task list missing";
             CommandResult result = c.execute(tasks);
-            storage.save(tasks);
+            switch (result.commandType()) {
+                case FIND:
+                    // Fallthrough
+                case LIST:
+                    break;
+                default:
+                    storage.save(tasks);
+                    break;
+            }
             return result;
         } catch (JasperException e) {
             return new CommandResult(CommandType.ERROR, "Error: " + e.getMessage());

@@ -75,3 +75,18 @@ run {
     standardInput = System.in
     enableAssertions = true
 }
+
+tasks.named('run') {
+    description = 'Runs the Jasper JavaFX GUI'
+}
+
+tasks.register('runCli', JavaExec) {
+    group = 'application'
+    description = 'Runs the Jasper CLI'
+
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'jasper.CliMain'
+
+    standardInput = System.in
+    enableAssertions = true
+}

@@ -1,7 +1,6 @@
 package jasper.command;
 
 import jasper.JasperException;
-import jasper.task.Task;
 import jasper.task.TaskList;
 
 /**
@@ -32,12 +31,7 @@ public class MarkCommand implements Command {
         }
         try {
             startIndex = Integer.parseInt(parts[0]) - 1;
-            stopIndex = (parts.length == 1)
-                    ? startIndex
-                    : Integer.parseInt(parts[1]) - 1;
-            if (startIndex > stopIndex) {
-                throw new JasperException("Start index must be at most stop index!");
-            }
+            stopIndex = (parts.length == 1) ? startIndex : Integer.parseInt(parts[1]) - 1;
         } catch (NumberFormatException e) {
             throw new JasperException(USAGE_MSG);
         }
@@ -45,11 +39,8 @@ public class MarkCommand implements Command {
 
     @Override
     public CommandResult execute(TaskList tasks) throws JasperException {
-        StringBuilder sb = new StringBuilder("Alright! I've marked these tasks as done:");
-        for (int i = startIndex; i <= stopIndex; ++i) {
-            Task t = tasks.mark(i);
-            sb.append("\n  ").append(i + 1).append(". ").append(t);
-        }
-        return new CommandResult(CommandType.MARK, sb.toString());
+        String marked = tasks.mark(startIndex, stopIndex);
+        String output = "Alright! I've marked these tasks as done:" + marked.indent(2);
+        return new CommandResult(CommandType.MARK, output);
     }
 }

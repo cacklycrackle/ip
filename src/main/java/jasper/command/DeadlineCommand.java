@@ -37,7 +37,7 @@ public class DeadlineCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(TaskList tasks) {
+    public CommandResult execute(TaskList tasks) throws JasperException {
         tasks.add(task);
         return new CommandResult(CommandType.DEADLINE, "Aye, aye. I've added this task:\n  " + task);
     }

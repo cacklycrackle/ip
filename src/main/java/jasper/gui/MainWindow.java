@@ -2,6 +2,7 @@ package jasper.gui;
 
 import jasper.Jasper;
 import jasper.command.CommandResult;
+import jasper.command.CommandType;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -44,12 +45,16 @@ public class MainWindow {
     }
 
     /**
-     * Sets the main Jasper instance used to handle application logic.
+     * Sets main Jasper instance used to handle application logic and displays startup warnings (if any).
      *
      * @param j Jasper application instance.
      */
     public void setJasper(Jasper j) {
         jasper = j;
+        jasper.getStartupWarning().ifPresent(warning -> {
+            CommandResult tmp = new CommandResult(CommandType.ERROR, warning);
+            dialogs.getItems().add(DialogBox.getJasperDialog(tmp, jasperImage));
+        });
     }
 
     /**

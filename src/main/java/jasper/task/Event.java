@@ -38,4 +38,15 @@ public class Event extends Task {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         return String.format("[E]%s (from: %s to: %s)", super.toString(), from.format(fmt), to.format(fmt));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Event other) {
+            return super.equals(other) && this.from.equals(other.from) && this.to.equals(other.to);
+        }
+        return false;
+    }
 }

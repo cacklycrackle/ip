@@ -15,6 +15,7 @@ public class CliMain {
         Ui ui = new Ui(); // User interface component handling CLI input and output
 
         ui.showWelcome();
+        jasper.getStartupWarning().ifPresent(ui::showError);
         CommandResult result;
         do {
             result = jasper.getResult(ui.readCommand());

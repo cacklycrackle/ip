@@ -36,6 +36,10 @@ public class Ui {
      * Reads the next command line from the user.
      */
     public String readCommand() {
+        if (!scanner.hasNextLine()) {
+            System.out.println();
+            return "bye";
+        }
         String input = scanner.nextLine();
         assert input != null : "User text input string is missing";
         return input.strip();
@@ -49,15 +53,21 @@ public class Ui {
     }
 
     /**
-     * Displays a formatted response or error message to the user based on their command's result.
+     * Displays a formatted response to the user based on their command's result.
      */
     public void showResponse(CommandResult result) {
-        String prefix = switch (result.commandType()) {
-            case ERROR -> ANSI_RED + "Something is amiss... " + ANSI_RESET;
-            default -> "";
-        };
-        String output = prefix + result.response();
-        System.out.print(output.indent(4));
+        switch (result.commandType()) {
+            case ERROR -> showError(result.response());
+            default -> System.out.print(result.response().indent(4));
+        }
+    }
+
+    /**
+     * Displays an error message to user.
+     */
+    public void showError(String err) {
+        String output = ANSI_RED + "Something is amiss... " + ANSI_RESET + err;
+        System.out.println(output.indent(4));
     }
 
     /**

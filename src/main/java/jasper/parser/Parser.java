@@ -29,6 +29,9 @@ public class Parser {
      * @throws JasperException If the command is unknown or the arguments are invalid.
      */
     public static Command parseCmd(String line) throws JasperException {
+        if (line.contains("|")) {
+            throw new JasperException("Pipe character '|' not allowed in commands!");
+        }
         String[] tokens = line.strip().split("\\s+", 2);
         String arg = (tokens.length > 1) ? tokens[1] : "";
         return switch (tokens[0]) {

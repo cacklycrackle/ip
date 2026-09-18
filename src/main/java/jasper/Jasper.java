@@ -1,5 +1,7 @@
 package jasper;
 
+import java.util.Optional;
+
 import jasper.command.Command;
 import jasper.command.CommandResult;
 import jasper.command.CommandType;
@@ -15,6 +17,7 @@ public class Jasper {
     private final Storage storage;
     /** List component managing user tasks */
     private final TaskList tasks;
+    private final Optional<String> startupWarning;
 
     /**
      * Constructs a Jasper instance and initializes core application components.
@@ -24,13 +27,26 @@ public class Jasper {
      */
     public Jasper(String parent, String filename) {
         storage = new Storage(parent, filename);
-        TaskList tmp;
+        TaskList tmpTasks;
+        Optional<String> tmpWarning;
         try {
-            tmp = storage.load();
+            tmpTasks = storage.load();
+            tmpWarning = Optional.empty();
         } catch (JasperException e) {
-            tmp = new TaskList();
+            tmpTasks = new TaskList();
+            try {
+                String backupName = storage.backup();
+                tmpWarning = Optional.of("Oh dear, your savefile appears to corrupted!\n"
+                        + "Backup is at " + backupName
+                        + " and a new, blank task list you shall be graced with.");
+            } catch (JasperException ex) {
+                tmpWarning = Optional.of("CRITICAL: Savefile corrupted and could not be backed up, "
+                        + "and will be rewritten with a new, blank list of tasks!");
+            }
+
         }
-        tasks = tmp;
+        tasks = tmpTasks;
+        startupWarning = tmpWarning;
     }
 
     /**
@@ -49,5 +65,9 @@ public class Jasper {
         } catch (JasperException e) {
             return new CommandResult(CommandType.ERROR, "Error: " + e.getMessage());
         }
+    }
+
+    public Optional<String> getStartupWarning() {
+        return startupWarning;
     }
 }

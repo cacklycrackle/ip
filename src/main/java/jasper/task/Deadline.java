@@ -30,4 +30,15 @@ public class Deadline extends Task {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
         return String.format("[D]%s (by: %s)", super.toString(), by.format(fmt));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Deadline other) {
+            return super.equals(other) && this.by.equals(other.by);
+        }
+        return false;
+    }
 }

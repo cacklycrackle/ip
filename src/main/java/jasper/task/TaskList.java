@@ -64,10 +64,17 @@ public class TaskList implements Iterable<Task> {
     /**
      * Adds a new task to the list.
      *
-     * @param t Task to be added.
+     * @param task Task to be added.
+     * @throws JasperException If matching task has already been added.
      */
-    public void add(Task t) {
-        tasks.add(t);
+    public void add(Task task) throws JasperException {
+        for (int i = 0; i < tasks.size(); ++i) {
+            Task t = tasks.get(i);
+            if (task.equals(t)) {
+                throw new JasperException("Task already present in list at index " + (i + 1) + "!");
+            }
+        }
+        tasks.add(task);
     }
 
     /**

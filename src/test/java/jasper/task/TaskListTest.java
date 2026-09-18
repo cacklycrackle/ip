@@ -29,7 +29,7 @@ public class TaskListTest {
     public void delete_invalidIndices_exceptionThrown() {
         TaskStub stub1 = new TaskStub();
         TaskStub stub2 = new TaskStub();
-        TaskList tasks = new TaskList(List.of(stub1, stub2));
+        TaskList tasks = new TaskList(List.of(stub1, stub2)); // ignore duplicate tasks
 
         try {
             tasks.delete(-1, -1);
@@ -58,7 +58,7 @@ public class TaskListTest {
         Task stub1 = new TaskStub();
         Task stub2 = new TaskStub();
         Task stub3 = new TaskStub();
-        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3));
+        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3)); // ignore duplicate tasks
 
         try {
             String result = tasks.delete(0, 1); // delete first two tasks
@@ -88,7 +88,7 @@ public class TaskListTest {
     void mark_invalidIndices_exceptionThrown() {
         TaskStub stub1 = new TaskStub();
         TaskStub stub2 = new TaskStub();
-        TaskList tasks = new TaskList(List.of(stub1, stub2));
+        TaskList tasks = new TaskList(List.of(stub1, stub2)); // ignore duplicate tasks
 
         try {
             tasks.mark(-1, -1);
@@ -117,7 +117,7 @@ public class TaskListTest {
         Task stub1 = new TaskStub();
         Task stub2 = new TaskStub();
         Task stub3 = new TaskStub();
-        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3));
+        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3)); // ignore duplicate tasks
 
         try {
             String result = tasks.mark(1, 2); // mark last two tasks
@@ -149,7 +149,7 @@ public class TaskListTest {
         TaskStub stub2 = new TaskStub();
         stub1.markDone();
         stub2.markUndone();
-        TaskList tasks = new TaskList(List.of(stub1, stub2));
+        TaskList tasks = new TaskList(List.of(stub1, stub2)); // ignore duplicate tasks
 
         try {
             tasks.unmark(-1, -1);
@@ -181,7 +181,7 @@ public class TaskListTest {
         stub1.markDone();
         stub2.markDone();
         stub3.markDone();
-        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3));
+        TaskList tasks = new TaskList(List.of(stub1, stub2, stub3)); // ignore duplicate tasks
 
         try {
             String result = tasks.unmark(0, 1); // unmark first two tasks

@@ -93,7 +93,7 @@ public class TaskList implements Iterable<Task> {
             removed[i] = tasks.remove(start + i);
         }
         for (int i = 0; i < removed.length; ++i) {
-            sb.append("\n  ").append(start + i + 1).append(". ").append(removed[i]);
+            sb.append('\n').append(start + i + 1).append(". ").append(removed[i]);
         }
         return sb.toString();
     }
@@ -112,7 +112,7 @@ public class TaskList implements Iterable<Task> {
         for (int i = start; i <= stop; ++i) {
             Task t = tasks.get(i);
             t.markDone();
-            sb.append("\n  ").append(i + 1).append(". ").append(t);
+            sb.append('\n').append(i + 1).append(". ").append(t);
         }
         return sb.toString();
     }
@@ -131,7 +131,7 @@ public class TaskList implements Iterable<Task> {
         for (int i = start; i <= stop; ++i) {
             Task t = tasks.get(i);
             t.markUndone();
-            sb.append("\n  ").append(i + 1).append(". ").append(t);
+            sb.append('\n').append(i + 1).append(". ").append(t);
         }
         return sb.toString();
     }

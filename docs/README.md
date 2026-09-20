@@ -59,6 +59,7 @@ Adds a simple undone task with a description.
 **Example:** `todo run` adds a task with a description `run`.
 
 **Expected output**:
+
 ```text
 Aye, aye. I've added this task:
   [T][ ] run
@@ -73,6 +74,7 @@ Adds an undone task with a description and deadline.
 **Example:** `deadline write essay /by 2024-03-02 08:20` adds a task with description `write essay` and intended deadline of 2nd March 2024, 8:20 a.m. 
 
 **Expected output**:
+
 ```text
 Aye, aye. I've added this task:
   [D][ ] (by: Mar 02 2024 08:20)
@@ -87,6 +89,7 @@ Adds an undone event with start and end datetimes.
 **Example:** `event party /from 2027-04-12 07:20 /to 2027-04-12 17:30` adds an event with description `party` that lasts from 12th April 2027, 7:20 a.m. until 12th April 2027, 5:30 p.m.
 
 **Expected output**:
+
 ```text
 Aye, aye. I've added this task:
   [E][ ]  party (from: Apr 12 2027 07:20 to: Apr 12 2027 17:30)
@@ -115,10 +118,12 @@ Marks the entry at index `<index>` / entries between indices `<start-index>` and
 **Examples:**
   * `mark 3` marks the 3rd entry in the list as done. 
     * Supposing 3rd entry is from running `todo run`, **expected output**:
+      
       ```text
       Alright, I've marked these tasks as done:
         3. [T][X] run
       ```
+      
   * `mark 10..15` marks all 6 entries from 10th to 15th as done. 
 
 ### Unmark tasks to be not done: `unmark <index>` or `unmark <start-index>..<stop-index>`
@@ -132,10 +137,12 @@ Unmarks the entry at index `<index>` / entries between indices `<start-index>` a
 **Examples:**
 * `unmark 3` unmarks the 3rd entry in the list. 
   * Supposing 3rd entry is from running `todo run`, **expected output**:
+    
     ```text
     Get to work... I've marked these tasks as not done yet:
       3. [T][ ] run
     ```
+    
 * `unmark 10..15` unmarks all 6 entries from 10th to 15th,
 
 ### Find a task based on partial match of description: `find <text>`
@@ -148,12 +155,13 @@ Finds all tasks where `<text>` is contained in the task's description.
 * If task list is empty, output is `No tasks here! Add some to search through.`.
 * If there are no matching tasks, output is `Where might the matching tasks be?`.
 * Suppose the only tasks containing "run" in their description are the 3rd task `todo run` and 7th task `deadline practice running barefoot /by 2026-12-01 01:23`. Expected output of `find run`:
+  
   ```text
   Matching tasks, here you go:
   3. [T][ ] run
   7. [D][ ] practice running barefoot (by: 1 Dec 2026 01:23)
   ```
-
+  
 ### Saving data
 
 Jasper automatically saves data after every command that modifies the task list. You do not need to save manually.
